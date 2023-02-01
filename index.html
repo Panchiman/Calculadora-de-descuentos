@@ -15,7 +15,7 @@
         <h3>Ingrese un numero de descuento y un tope de reintegro</h3>
         <form id="descuentos">
             <input type="number" min="1" max="100" name="descuento" id="numdescuento" placeholder="Numero de descuento">
-            <input type="number" min="1" name="topereinte" id="topereinte" placeholder="Tope de reintegro">
+            <input type="number" min="1" max="999999999" name="topereinte" id="topereinte" placeholder="Tope de reintegro">
             <button type="submit">Enviar</button>
         </form>
         <p id="errordescuento"></p>
@@ -23,8 +23,8 @@
         <p id="topereintegro">Tope de reintegro:</p>
         <p id="valormaximo">Valor a partir al que se llega al maximo descuento:</p>
         <form id="agregarproducto">
-            <input type="text" min="1" name="nombre" id="nombreproducto" placeholder="Nombre del producto">
-            <input type="number" min="1" name="precio" id="precioproducto" placeholder="Precio del producto">
+            <input type="text" min="1" maxlength="25" name="nombre" id="nombreproducto" placeholder="Nombre del producto">
+            <input type="number" min="1" max="999999999" name="precio" id="precioproducto" placeholder="Precio del producto">
             <button type="submit">Enviar</button>
         </form>
         <p id="errorproducto"></p>

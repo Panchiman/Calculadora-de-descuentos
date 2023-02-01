@@ -12,18 +12,44 @@
     <div>
         <h2>Primera Pre entrega del Proyecto final.</h2>
         <h1>Calculadora de descuentos:</h1>
+        <h3>Ingrese un numero de descuento y un tope de reintegro</h3>
+        <form id="descuentos">
+            <input type="number" min="1" max="100" name="descuento" id="numdescuento" placeholder="Numero de descuento">
+            <input type="number" min="1" name="topereinte" id="topereinte" placeholder="Tope de reintegro">
+            <button type="submit">Enviar</button>
+        </form>
+        <p id="errordescuento"></p>
         <p id="descuento">Porcentaje de descuento:</p>
         <p id="topereintegro">Tope de reintegro:</p>
         <p id="valormaximo">Valor a partir al que se llega al maximo descuento:</p>
-        <p id="productos">Productos:</p>
+        <form id="agregarproducto">
+            <input type="text" min="1" name="nombre" id="nombreproducto" placeholder="Nombre del producto">
+            <input type="number" min="1" name="precio" id="precioproducto" placeholder="Precio del producto">
+            <button type="submit">Enviar</button>
+        </form>
+        <p id="errorproducto"></p>
+        <h3 >Productos:</h3>
+        <p id="productos">No hay ningun producto:</p>
+        <p id="errortopeproducto"></p>
+
         <p id="total">Total:</p>
         <p id="restante">Restante para gastar:</p>
         <br>
-        <button onclick="busquedan()">Buscar por nombre</button>
-        <button onclick="busquedap()">Buscar por precio</button>
-        <button onclick="busquedanborrar()">Eliminar producto</button>
+        <button onclick="limpiarlista()">Limpiar lista</button>
+        <button onclick="guardarlista()">Guardar progreso</button>
+        <form id="busquedanombre">
+            <label for="nombre">Buscar por nombre:</label>
+            <input type="text" min="1" name="nombre" id="nombreproductobusqueda" placeholder="Nombre del producto">
+            <button type="submit">Enviar</button>
+        </form>
+        <form id="busquedaprecio">
+            <label for="precio">Buscar por precio</label>
+            <input type="number" min="1" name="precio" id="precioproductobusqueda" placeholder="Precio del producto">
+            <button type="submit">Enviar</button>
+        </form>
 
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="main.js"></script>
 </body>
 </html>

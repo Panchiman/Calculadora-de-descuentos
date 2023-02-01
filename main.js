@@ -22,155 +22,50 @@ let listaprecio = [];
 //Esta variable es para llevar el total de lo que se desconto
 let totaldescontado = 0;
 // Esta variable es el % del descuento
-let  descuento = prompt("Ingrese el numero de descuento");
+let descuento = 0;
+let topereintegro = 0;
+let formularioDescuentos = document.getElementById("descuentos");
+let formulariobusquedanombre = document.getElementById("busquedanombre");
+let formulariobusquedaprecio = document.getElementById("busquedaprecio");
 
-let objetoparemover = "";
+let descmaximo = 0;
+let contadorproductos = 0;
+let nombreproducto = "";
+let nombreproductob ="";
+let precio = 0;
+// en este json se va a guardar el array de productos convertido a json
+let productosjson = "";
+//Esta funcion es para que si el numero tiene decimales solo se muestren los ultimos 2
 
+function tofixear2(numero){
+    return Number(Number(numero).toFixed(2));
+}
+
+//Esta funcion sirve para calcular en cuanto queda el prec1io de un producto con el descuento aplicado
+function restdescuento(desc,monto){
+return (monto/100)*desc;
+}
 
 //Esta funcion es para hacer la comprobacion
 function comprobarnombresp(product){
     return product.nombre == nombreproducto;
 }
 
-// Este while y los siguientes son para que el usuario si o si tenga que introducir un numero para poder proseguir con el resto del algoritmo
-// La idea es que el while solo se cancele is el numero ingresado es un numero y si no lo es dar un mensaje acorde
-while (isNaN(descuento) == true || descuento === null || descuento.length == 0 || descuento > 100 || descuento <= 0){
-    if (descuento == null || descuento.length == 0){
-        descuento = prompt("Es necesario que introduzca un numero de descuento para continuar");
-    }
-    else if (isNaN(descuento) == true){
-        descuento = prompt("Introduzca solo un numero del descuento");
-    }
-    else if (descuento > 100){
-        descuento = prompt("Introduzca un numero del descuento no mayor a 100");
-    }
-    else if (descuento <= 0){
-        descuento = prompt("Introduzca un numero del descuento mayor a 0");
-    }
-    else {
-        break
-    }
-}
-//al final use .innerHTML en lugar de alert() porque asi no desaparece la informacion y es mas comodo, lo mismo para todos los siguientes.
-document.getElementById("descuento").innerHTML = "Su numero de descuento es " + "<b>" + descuento +"%." + "</b>";
-//Esta variable es el tope que te devuelven, el maximo que te llegan a reintegrar. 
-let  topereintegro = prompt("Ingrese el tope de descuento");
-while (isNaN(topereintegro) == true || topereintegro === null || topereintegro.length == 0){
-    if (topereintegro == null || topereintegro.length == 0){
-        topereintegro = prompt("Es necesario que introduzca el tope de reintegro para continuar");
-    }
-    else if (isNaN(topereintegro) == true){
-        topereintegro = prompt("Introduzca solo el numero del tope de reintegro");
-    }
-    else {
-        break
-    }
-}
+function renderdescuentos(){
+    //al final use .innerHTML en lugar de alert() porque asi no desaparece la informacion y es mas comodo, lo mismo para todos los siguientes.
+    document.getElementById("descuento").innerHTML = "Su numero de descuento es " + "<b>" + descuento +"%." + "</b>";
+    //Esta variable es el tope que te devuelven, el maximo que te llegan a reintegrar. 
+    //let  topereintegro = prompt("Ingrese el tope de descuento");
 
-//Esta funcion es para que si el numero tiene decimales solo se muestren los ultimos 2
-function tofixear2(numero){
-    return Number(Number(numero).toFixed(2));
+    //En esta variable esta el calculo del maximo que uno puede gastar para que se aplique el descuento a todo.
+    descmaximo = tofixear2((topereintegro * 100) / descuento);
+
+    document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<b>" + topereintegro + "</b>" + " pesos.";
+
+    document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es: " +  "<b>" + descmaximo + "</b>" + " pesos.";
 }
 
 
-
-//Esta funcion sirve para calcular en cuanto queda el prec1io de un producto con el descuento aplicado
-function restdescuento(desc,monto){
-return (monto/100)*desc;
-}
-//En esta variable esta el calculo del maximo que uno puede gastar para que se aplique el descuento a todo.
-let descmaximo = tofixear2((topereintegro * 100) / descuento);
-
-document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<b>" + topereintegro + "</b>" + " pesos.";
-
-document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es: " +  "<b>" + descmaximo + "</b>" + " pesos.";
-
-
-
-//clase para construir los distintos productos, con el nombre del producto, el precio y el precio con el descuento del mismo.
-class Producto {
-    constructor(nombre, precio){
-        this.nombre = nombre;
-        this.precio = precio;
-        this.preciocondesct = tofixear2 (this.precio - restdescuento(descuento,this.precio));
-    }
-}
-
-// Esta funcion es para que el usuario si o si tenga que introducir un numero para poder proseguir con el resto del algoritmo
-// La idea es que el while solo se cancele is el numero ingresado es un numero y si no lo es dar un mensaje acorde
-function whileprecios() {
-    while (isNaN(precioproducto) == true || precioproducto === null || precioproducto.length == 0){
-        if (precioproducto == null || precioproducto.length == 0){
-            precioproducto = prompt("Es necesario que introduzca un monto del producto para continuar");
-        }
-        else if (isNaN(precioproducto) == true){
-            precioproducto = prompt("Introduzca solo el numero del precio del producto");
-        }
-        else {
-            break;
-        }
-}}
-
-
-
-//Esta funcion es para lo mismo que la anterior pero para el nombre del producto
-function whilenombres() {
-    while (isNaN(nombreproducto) == false || nombreproducto === null || nombreproducto.length == 0 || productos.find(comprobarnombresp)){
-        if (nombreproducto == null || nombreproducto.length == 0){
-            nombreproducto = prompt("Es necesario que introduzca un nombre del producto para continuar. Para detener y obtener los resultados introduzca: stop");
-        }
-        else if (isNaN(nombreproducto) == false){
-            nombreproducto = prompt("Introduzca solo el nombre del producto. Para detener y obtener los resultados introduzca: stop");
-        }
-        else if (productos.find(comprobarnombresp)){
-            nombreproducto = prompt("Ese producto ya se encuentra en la lista, ingrese uno diferente. Para detener y obtener los resultados introduzca: stop");
-        }
-        else {
-            break;
-        }
-}}
-
-
-//Este for es para llevar el contador y porque no se cuantos productos querra agregar el usuario, por lo mismo use un array, para poner cada objeto como una parte de ese array y ya que no podia saber cuantas variables crear para los mismos sino.
-for (let contador = 0;; contador += 1) {
-    nombreproducto = prompt ("Introduzca un nombre. Para detener y obtener los resultados introduzca: stop");
-    whilenombres()
-    nombre = nombreproducto;
-    //esto es para detener la entrada de productos, a falta de interfaz grafica interactiva se me ocurrio que se detenga con el usuario escribiendo "stop"
-    if (nombre == "stop"){
-        break
-    }
-    precioproducto = prompt ("Es necesario que introduzca un monto del producto para continuar");
-    whileprecios()
-    precio = Number(precioproducto);
-
-    //esto es para crear los objetos
-    productos[contador] = new Producto (nombre, precio);
-    total += productos[contador].precio;
-    //esto es para detenerlo si te pasaste del descuento, aunque aun sigue sumando el precio del producto ese.
-    if (total >= descmaximo){
-        break
-    }
-};
-
-function compararproducto(product){
-    return product == objetoparemover
-}
-
-function remover(texto){
-    objetoparemover = texto;
-    let indice = productos.findIndex(compararproducto);
-    productos.splice(indice,1,"")
-    document.getElementById("productos").innerHTML = text.join("");
-}
-
-//Este for of es para pasar por todos los objetos de la array con su nombre, precio y precio con descuento.
-function agregartexto(){
-    for (let x of productos){
-        text.push("<p></p><b>Producto: </b>" + x.nombre + "<b>, precio: </b>" + x.precio + "<b>, precio con el descuento: </b>" + x.preciocondesct + "<i class='material-icons' onclick='remover("+ x +")'>close</i>" + "<br></p>" ) 
-    }
-}
-agregartexto()
 //Esto es para mostrar lo que queda restante para gastar, si te pasaste te lo dice y por cuanto, sino te dice cuanto te queda.
 function calcularrestante(){
     restante = descmaximo - total;
@@ -179,12 +74,11 @@ function calcularrestante(){
     }
     else{
         restante = tofixear2(restante);
-        restante = "Te quedan " + "<b>" + restante + "</b>" + " pesos para llegar al maximo que puedes gastar."
+        restante = "Te quedan " + "<b>" + restante + "</b>" + " pesos para llegar al maximo donde el descuento se aplica."
     }
     //muestra el restante para gastar.
     document.getElementById("restante").innerHTML = restante;
 }
-calcularrestante()
 //Esto es para limitar el descuento total y lo descontado si se pasa del maximo
 function calculartotales(){
     if (total >= descmaximo){
@@ -200,30 +94,112 @@ function calculartotales(){
     //Muestra la variable con toda la info de los productos
     document.getElementById("productos").innerHTML = text.join("");
 }
-calculartotales()
 
-
-
-
-//Esta funcion es para hacer la comprobacion
 function comprobarnombres(product){
-    return product.nombre == nombrebusqueda;
+    return product.nombre === nombreproducto;
 }
+
+function comprobarnombresb(product){
+    return product.nombre === nombrebusquedab;
+}
+//este evento es para registrar el descuento y el tope de reintegro por el formulario y dar un error en caso de ser necesario
+formularioDescuentos.addEventListener("submit", function(event){
+    event.preventDefault()
+    let inputdescuento = document.getElementById("numdescuento")
+    let inputtopereinte = document.getElementById("topereinte")
+    descuento = Number(inputdescuento.value);
+    topereintegro = Number(inputtopereinte.value);
+    if (topereintegro === 0 || descuento === 0){
+        document.getElementById("errordescuento").innerHTML = "<p class='error'>Debe llenar ambos campos</p>"
+    }
+    else {
+        document.getElementById("errordescuento").innerHTML = ""
+        renderdescuentos()
+        renderproducts()
+    }
+})
+
+
+
+
+
+
+
+
+//clase para construir los distintos productos, con el nombre del producto, el precio y el precio con el descuento del mismo.
+class Producto {
+    constructor(nombre, precio){
+        this.nombre = nombre;
+        this.precio = precio;
+        this.preciocondesct = tofixear2 (this.precio - restdescuento(descuento,this.precio));
+    }
+}
+
+function renderproducts(){
+    text = [];
+    console.log(productos)
+    for (let x of productos){
+        text.push("<p></p><b>Producto: </b>" + x.nombre + "<b> - precio: </b>" + x.precio + "<b> - precio con el descuento: </b>" + x.preciocondesct + "<i class='material-icons' id='"+ x.nombre +"' onclick='remover(`"+ x.nombre +"`)'>close</i>" + "<br></p>")
+        document.getElementById("productos").innerHTML = text.join("");
+        calcularrestante();
+        calculartotales();
+    }
+}
+
+let formularioagregarproducto = document.getElementById("agregarproducto");
+formularioagregarproducto.addEventListener("submit", function(event){
+    event.preventDefault()
+    if (topereintegro === 0 || descuento === 0){
+        document.getElementById("errorproducto").innerHTML = "<p class='error'>Primero ingrese un numero de descuento y tope de reintegro</p>"
+    }
+    else{
+        let inputnombre = document.getElementById("nombreproducto")
+        let inputprecio = document.getElementById("precioproducto")
+        nombreproducto = inputnombre.value;
+        precio = Number(inputprecio.value);
+        if (nombreproducto === "" || precio === 0){
+            document.getElementById("errorproducto").innerHTML = "<p class='error'>Debe llenar ambos campos</p>"
+        }
+        else if (productos.find(comprobarnombres)){
+            document.getElementById("errorproducto").innerHTML = "<p class='error'>Ya existe un producto con ese nombre</p>"
+        }
+        else {
+            document.getElementById("errorproducto").innerHTML = "";
+            productos[contadorproductos] = new Producto (nombreproducto, precio)
+            total += productos[contadorproductos].precio;
+            contadorproductos++;
+            renderproducts()
+            if (total >= descmaximo){
+                document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
+            }
+        }
+
+    }
+})
+//este evento es para buscar un producto por el nombre
+formulariobusquedanombre.addEventListener("submit", function(event){
+    event.preventDefault()
+    let inputnombrebusqueda = document.getElementById("nombreproductobusqueda")
+    nombrebusquedab = inputnombrebusqueda.value
+    if (productos.find(comprobarnombresb)){
+        Swal.fire({
+            icon: 'success',
+            title: 'Producto encontrado',
+            text: productos.find(comprobarnombresb).nombre  + ": " + productos.find(comprobarnombresb).precio,
+        })
+    }
+    else{
+        Swal.fire({
+            icon: 'error',
+            title: 'No se encontro un producto con ese nombre',
+        })
+    }
+})
 
 //Esta funcion es para hacer la comprobacion
 function comprobaprecio(product){
     return product.precio == preciobusqueda;
 }
-//Esta funcion es la que pide que producto buscar y te devuelve el nombre y precio si lo encuentra, solo funciona con un producto, pero al menos hasta que tenga una interfaz grafica no esta pensado para usar varios productos con el mismo nombre.
-function busquedan(){
-    nombrebusqueda = prompt("Ingrese el nombre del producto que desea buscar")
-    if (productos.find(comprobarnombres)){
-        alert(productos.find(comprobarnombres).nombre + ": " + productos.find(comprobarnombres).precio)
-    }
-else{
-    alert("No se encontro un producto con se nombre")
-}
-};
 
 //Esta funcion es para agregar los nombres de los productos del array de objetos que coincidan con la busqueda por precio
 function listarprecios(x){
@@ -231,35 +207,111 @@ function listarprecios(x){
         listaprecio.push(y.nombre);
     }
 }
-//Esta funcion es la que se encarga de dar el alert con todos los productos que coincidieron con la busqueda por precio
-function busquedap(){
-    preciobusqueda = prompt("Ingrese el precio de producto que desea buscar")
+//este evento es para buscar un producto por el precio
+
+formulariobusquedaprecio.addEventListener("submit", function(event){
+    event.preventDefault()
+    let inputpreciobusqueda = document.getElementById("precioproductobusqueda")
+    preciobusqueda = Number(inputpreciobusqueda.value)
     if (productos.filter(comprobaprecio) == ""){
-        alert("No se encontro ningun producto con ese precio")
+        Swal.fire({
+            icon: 'error',
+            title: 'No se encontro ningun producto con ese precio',
+        })
     }
 else{
     let x = productos.filter(comprobaprecio);
     listarprecios(x);
-    alert("Productos con ese precio: " + listaprecio);
+    Swal.fire(
+        'Se encontraron productos con ese precio:',
+        "<b>Productos: </b>" + listaprecio.join(", "),
+        'success'
+    )
 }
-};
+})
 
-function busquedanborrar(){
-    nombrebusqueda = prompt("Ingrese el nombre del producto que desea borrar")
-    if (productos.findIndex(comprobarnombres) != -1){
-        let producto = productos.findIndex(comprobarnombres);
-        total = total - productos[producto].precio
-        console.log(productos[producto].precio)
-        productos.splice(producto,1,);
-        text = []
-        agregartexto()
-        calcularrestante()
-        calculartotales()
-        document.getElementById("productos").innerHTML = text.join("");
-        console.log(productos)
-        alert("Producto borrado")
-    }
-else{
-    alert("No se encontro un producto con se nombre")
+//Esto esta para que cuando pulses para borrar un objeto te pida confirmacion y en caso de que sea si borre dicho producto
+function remover(nombrearemover){
+    Swal.fire({
+        title: '¿Seguro que desea eliminar el producto?',
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: `No`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+        Swal.fire('Producto eliminado!', '', 'success')
+        let index = productos.findIndex(producto => producto.nombre === nombrearemover);
+        total = total - productos[index].precio
+        productos.splice(index,1,);
+        contadorproductos--
+        renderproducts();
+        calcularrestante();
+        calculartotales();
+        } else if (result.isDenied) {
+        Swal.fire('No se elimino el producto', '', 'error')
+        }
+    })
 }
-};
+//esta funcion borra toda la lista de productos
+function limpiarlista(){
+    Swal.fire({
+        title: '¿Seguro que desea borrar la lista de productos?',
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: `No`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+        Swal.fire('Lista borrada!', '', 'success')
+        productos = [];
+        total = 0;
+        contadorproductos = 0;
+
+        renderproducts();
+        calcularrestante();
+        calculartotales();
+        } else if (result.isDenied) {
+        Swal.fire('No se elimino la lista', '', 'error')
+        }
+    })
+}
+
+// Esta variable es para llevar registro si la lista fue guardada o no
+let listaguardada = null;
+
+//esta funcion es para guardar todas las variables en el localstorage, originalmente iba a ser que se guarden automaticamente todo el tiempo, pero me parecio que por ahi era molesto si no querias que se guarden.
+function guardarlista(){
+    listaguardada = true;
+    localStorage.setItem("descuento", descuento);
+    localStorage.setItem("topereintegro", topereintegro);
+    productosjson = JSON.stringify(productos);
+    localStorage.setItem("productos", productosjson)
+    localStorage.setItem("contadorproductos", contadorproductos);
+    localStorage.setItem("total", total)
+    localStorage.setItem("listaguardada", listaguardada);
+    Swal.fire({
+        icon: 'success',
+        title: 'Progreso guardado guardada',
+    })
+}
+
+listaguardada = localStorage.getItem("listaguardada");
+if ((listaguardada != null)){
+    descuento = Number(localStorage.getItem("descuento", descuento));
+    topereintegro = Number(localStorage.getItem("topereintegro", topereintegro));
+    total = Number(localStorage.getItem("total", total));
+    productosjson = localStorage.getItem("productos", productosjson);
+    productos = JSON.parse(productosjson);
+    contadorproductos = Number(localStorage.getItem("contadorproductos", contadorproductos));
+    renderdescuentos()
+    calcularrestante()
+    calculartotales()
+    renderproducts()
+}
+
+    
+
+
+
+

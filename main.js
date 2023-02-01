@@ -267,6 +267,7 @@ function limpiarlista(){
         productos = [];
         total = 0;
         contadorproductos = 0;
+        document.getElementById("errortopeproducto").innerHTML = "";
 
         renderproducts();
         calcularrestante();

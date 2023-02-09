@@ -37,14 +37,15 @@ let precio = 0;
 let productosjson = "";
 //Esta funcion es para que si el numero tiene decimales solo se muestren los ultimos 2
 
+
+
 function tofixear2(numero){
     return Number(Number(numero).toFixed(2));
 }
 
 //Esta funcion sirve para calcular en cuanto queda el prec1io de un producto con el descuento aplicado
 function restdescuento(desc,monto){
-return (monto/100)*desc;
-}
+return (monto/100)*desc;}
 
 //Esta funcion es para hacer la comprobacion
 function comprobarnombresp(product){
@@ -132,18 +133,43 @@ class Producto {
         this.nombre = nombre;
         this.precio = precio;
         this.preciocondesct = tofixear2 (this.precio - restdescuento(descuento,this.precio));
+        this.cantidad = 1;
     }
 }
 
 function renderproducts(){
     text = [];
-    console.log(productos)
+    let i = 0;
     for (let x of productos){
-        text.push("<p></p><b>Producto: </b>" + x.nombre + "<b> - precio: </b>" + x.precio + "<b> - precio con el descuento: </b>" + x.preciocondesct + "<i class='material-icons' id='"+ x.nombre +"' onclick='remover(`"+ x.nombre +"`)'>close</i>" + "<br></p>")
+        i++
+        text.push("<div class='products'><p><b>Producto: </b>" + x.nombre+ "<b> - Cantidad: </b>" +"<select id='select"+ i + "' onchange='cambiarcantidad(`"+ x.nombre +"`)'>" + selectfunction(x.cantidad) + "</select>" + "<b> - Precio: </b>" + x.precio * x.cantidad + "("+ x.precio +" c/u)" + "<b> - Precio con el descuento: </b>" + x.preciocondesct * x.cantidad + "("+ x.preciocondesct +" c/u)" + "<div><i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_product(`"+ x.nombre +"`)></i>" + "<i class='fa-solid fa-trash error_icon' onclick=remover(`"+ x.nombre +"`)></i></div>" + "</p></div>")
         document.getElementById("productos").innerHTML = text.join("");
         calcularrestante();
         calculartotales();
+}}
+
+function  cambiarcantidad(objeto){
+    let index = productos.findIndex(producto => producto.nombre === objeto);
+    total -= productos[index].precio * productos[index].cantidad;
+    let laid = "select" + (index + 1);
+    productos[index].cantidad = Number(document.getElementById(laid).value);
+    total += productos[index].precio * productos[index].cantidad;
+    calcularrestante()
+    calculartotales()
+    renderproducts()
+}
+
+function selectfunction(objeto){
+    let select = [];
+    for (let i = 1; i < 100; i++) {
+        select.push('<option value="'+ i +'">'+ i +'</option>');
+        if (i === objeto){
+            let opcion = '<option value="'+ i +'" selected>'+ i +' </option>';
+            select.splice(objeto - 1,1,opcion);
+        }
     }
+    console.log(select.join(""))
+    return select.join("")
 }
 
 let formularioagregarproducto = document.getElementById("agregarproducto");
@@ -157,8 +183,8 @@ formularioagregarproducto.addEventListener("submit", function(event){
         let inputprecio = document.getElementById("precioproducto")
         nombreproducto = inputnombre.value;
         precio = Number(inputprecio.value);
-        if (nombreproducto === "" || precio === 0){
-            document.getElementById("errorproducto").innerHTML = "<p class='error'>Debe llenar ambos campos</p>"
+        if (nombreproducto === ""){
+            precio = 0;
         }
         else if (productos.find(comprobarnombres)){
             document.getElementById("errorproducto").innerHTML = "<p class='error'>Ya existe un producto con ese nombre</p>"
@@ -230,6 +256,33 @@ else{
 }
 })
 
+function edit_product(nombreaeditar){
+    let index = productos.findIndex(producto => producto.nombre === nombreaeditar);
+    const { value: formValues } = Swal.fire({
+        title: 'Multiple inputs',
+        html:
+        '<label for="nombreproduct">Nombre del producto:</label>' +
+        '<input id="swal-input1" type="text" value="'+ productos[index].nombre +'" name="nombreproduct" class="swal2-input">' +
+        '<label for="precioproducto">Nombre del producto:</label>' +
+        '<input id="swal-input2" type="number" value="'+ productos[index].precio +'" name="precioproducto" class="swal2-input">',
+    focusConfirm: false,
+    showCancelButton: true,
+    preConfirm: () => {
+        return [
+            total -= productos[index].precio * productos[index].cantidad,
+            productos[index].nombre = document.getElementById('swal-input1').value,
+            productos[index].precio = Number(document.getElementById('swal-input2').value),
+            total += productos[index].precio * productos[index].cantidad,
+            productos[index].preciocondesct = tofixear2 (productos[index].precio - restdescuento(descuento,productos[index].precio)),
+            calcularrestante(),
+            calculartotales(),
+            renderproducts()
+        ]
+    }
+    })
+
+}
+
 //Esto esta para que cuando pulses para borrar un objeto te pida confirmacion y en caso de que sea si borre dicho producto
 function remover(nombrearemover){
     Swal.fire({
@@ -240,17 +293,14 @@ function remover(nombrearemover){
     }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-        Swal.fire('Producto eliminado!', '', 'success')
         let index = productos.findIndex(producto => producto.nombre === nombrearemover);
-        total = total - productos[index].precio
+        total = total - (productos[index].precio * productos[index].cantidad)
         productos.splice(index,1,);
         contadorproductos--
         renderproducts();
         calcularrestante();
         calculartotales();
-        } else if (result.isDenied) {
-        Swal.fire('No se elimino el producto', '', 'error')
-        }
+        } 
     })
 }
 //esta funcion borra toda la lista de productos
@@ -310,9 +360,3 @@ if ((listaguardada != null)){
     calculartotales()
     renderproducts()
 }
-
-    
-
-
-
-

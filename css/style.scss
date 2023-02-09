@@ -1,0 +1,59 @@
+body{
+    main{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p{
+            font-size: 20px;
+        }
+        
+        h2{
+            font-size: 35px;
+        }
+        
+        h1{
+            font-size: 45px;
+        }
+        .error{
+            color: red;
+            font-size: 1rem;
+        }
+        .discount_container{
+            }
+            #descuentos{
+                display: flex;
+                flex-direction: column;
+            }
+            #numdescuento{
+                min-width: 150px;
+            }
+        }
+        .products_container{
+            background-color: rgb(231, 231, 231);
+            .products{
+                display: flex;
+                justify-content: space-around;
+                select{
+                    width: 50px;
+                }
+                i{
+                    cursor: pointer;
+                    font-size: 28px;
+                    margin-left: 15px;
+                    display: inline-block;
+                    }
+                
+                .edit_icon{
+                    font-size: 25px;
+                    color: green;
+                }
+                .error_icon{
+                    color: green;
+                    position: relative;
+                    font-size: 25px;
+            }
+            }
+
+    }
+}
+

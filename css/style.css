@@ -1,0 +1,78 @@
+body main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body main p {
+  font-size: 20px;
+}
+
+body main h2 {
+  font-size: 35px;
+}
+
+body main h1 {
+  font-size: 45px;
+}
+
+body main .error {
+  color: red;
+  font-size: 1rem;
+}
+
+body main #descuentos {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body main #numdescuento {
+  min-width: 150px;
+}
+
+body .products_container {
+  background-color: #e7e7e7;
+}
+
+body .products_container .products {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+body .products_container .products select {
+  width: 50px;
+}
+
+body .products_container .products i {
+  cursor: pointer;
+  font-size: 28px;
+  margin-left: 15px;
+  display: inline-block;
+}
+
+body .products_container .products .edit_icon {
+  font-size: 25px;
+  color: green;
+}
+
+body .products_container .products .error_icon {
+  color: green;
+  position: relative;
+  font-size: 25px;
+}
+/*# sourceMappingURL=style.css.map */

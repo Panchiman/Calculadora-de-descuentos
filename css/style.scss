@@ -27,7 +27,12 @@ body{
             }
             #numdescuento{
                 min-width: 150px;
-            }}
+            }
+            form{
+                display: flex;
+                flex-direction: column;
+            }
+        }
         .text-container{
             #numerocuentas{
                 display: flex;

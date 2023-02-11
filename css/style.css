@@ -40,6 +40,16 @@ body main .discount_container #numdescuento {
   min-width: 150px;
 }
 
+body main .discount_container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 body main .text-container #numerocuentas {
   display: -webkit-box;
   display: -ms-flexbox;

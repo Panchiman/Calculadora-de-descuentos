@@ -82,6 +82,10 @@ body main .products_container .products {
       justify-content: space-around;
 }
 
+body main .products_container .products .tachado {
+  text-decoration: line-through;
+}
+
 body main .products_container .products select {
   width: 50px;
 }

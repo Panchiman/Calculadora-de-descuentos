@@ -40,6 +40,10 @@ let lista_descuentosjson ="";
 let banco = "";
 let lista_descuentos = [];
 let contador_cuentas = 1;
+let lista_tachados = [];
+let lista_tachadosjson = [];
+let totaltachados = 0;
+
 function backup (key,variable){
     if (localStorage.getItem(key, variable)){
         return localStorage.getItem(key, variable)
@@ -76,8 +80,6 @@ function renderdescuentos(){
     else{
         descmaximo = (tofixear2((topereintegro * 100) / descuento)) * contador_cuentas;
     }
-    console.log(descuento)
-    console.log(topereintegro)
     document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<b>" + (topereintegro * contador_cuentas) + "</b>" + " pesos.";
 
     document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es: " +  "<b>" + descmaximo + "</b>" + " pesos.";
@@ -151,12 +153,64 @@ class Producto {
     }
 }
 
+function comprobartachadas(comprobado){
+    for (let x of lista_tachados){
+        if (x == comprobado.nombre){
+            return true
+        }
+    }
+}
+
+function botontachadas(nombreproducto){
+    let indexproductos = productos.findIndex((element) => element.nombre == nombreproducto)
+    let preciotachado = productos[indexproductos].precio;
+    let cantidadtachada = productos[indexproductos].cantidad;
+    if (lista_tachados.find(element => element == nombreproducto)){
+        let nombre = lista_tachados.find(element => element.nombre == nombreproducto);
+        let index = lista_tachados.findIndex((element) => element == nombre);
+        lista_tachados.splice(index,1,);
+        total += preciotachado * cantidadtachada;
+        totaltachados -= preciotachado * cantidadtachada;
+        renderproducts();
+        calculartotales();
+        calcularrestante();
+        lista_tachadosjson = JSON.stringify(lista_tachados)
+        localStorage.removeItem("lista_tachados")
+        localStorage.setItem("lista_tachados", lista_tachadosjson)
+        localStorage.removeItem("total")
+        localStorage.setItem("total", total)
+        localStorage.removeItem("totaltachados")
+        localStorage.setItem("totaltachados", totaltachados)
+    }
+    else{
+        lista_tachados.push(nombreproducto)
+        total -= preciotachado * cantidadtachada;
+        totaltachados += preciotachado * cantidadtachada;
+        renderproducts();
+        calculartotales();
+        calcularrestante();
+        lista_tachadosjson = JSON.stringify(lista_tachados)
+        localStorage.removeItem("lista_tachados")
+        localStorage.setItem("lista_tachados", lista_tachadosjson)
+        localStorage.removeItem("total")
+        localStorage.setItem("total", total)
+        localStorage.removeItem("totaltachados")
+        localStorage.setItem("totaltachados", totaltachados)
+    }
+}
+
 function renderproducts(){
     text = [];
     let i = 0;
     for (let x of productos){
         i++
-        text.push("<div class='products'><p><b>Producto: </b>" + x.nombre+ "<i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productnombre(`"+ x.nombre +"`)></i>" + "<b> - Cantidad: </b>" +"<select id='select"+ i + "' onchange='cambiarcantidad(`"+ x.nombre +"`)'>" + selectfunction(x.cantidad) + "</select>" + "<b> - Precio: </b>" + x.precio * x.cantidad + " ("+ x.precio +" c/u)" + "<i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productprecio(`"+ x.nombre +"`)></i>" + "<b> - Precio con el descuento: </b>" + x.preciocondesct() * x.cantidad + " ("+ x.preciocondesct() +" c/u)" + "<div><i class='fa-solid fa-trash error_icon' onclick=remover(`"+ x.nombre +"`)></i></div>" + "</p></div>")
+        if (comprobartachadas(x)){
+            text.push("<div class='products'><p class='tachado'><b>Producto: </b>" + x.nombre+ "<i class='fa-solid fa-pen-to-square edit_icon'></i>" + "<b> - Cantidad: </b>" +"<select id='select"+ i + "' onchange='cambiarcantidad(`"+ x.nombre +"`)' disabled>" + selectfunction(x.cantidad) + "</select>" + "<b> - Precio: </b>" + x.precio * x.cantidad + " ("+ x.precio +" c/u)" + "<i class='fa-solid fa-pen-to-square edit_icon'></i>" + "<b> - Precio con el descuento: </b>" + x.preciocondesct() * x.cantidad + " ("+ x.preciocondesct() +" c/u)" + "<i class='material-icons' onclick=botontachadas(`" + x.nombre + "`)>check_box</i>" + "<div><i class='fa-solid fa-trash error_icon' onclick=remover(`"+ x.nombre +"`)></i></div>" + "</p></div>")
+        }
+        else{
+            text.push("<div class='products'><p><b>Producto: </b>" + x.nombre+ "<i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productnombre(`"+ x.nombre +"`)></i>" + "<b> - Cantidad: </b>" +"<select id='select"+ i + "' onchange='cambiarcantidad(`"+ x.nombre +"`)'>" + selectfunction(x.cantidad) + "</select>" + "<b> - Precio: </b>" + x.precio * x.cantidad + " ("+ x.precio +" c/u)" + "<i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productprecio(`"+ x.nombre +"`)></i>" + "<b> - Precio con el descuento: </b>" + x.preciocondesct() * x.cantidad + " ("+ x.preciocondesct() +" c/u)" + "<i class='material-icons' onclick=botontachadas(`" + x.nombre + "`)>check_box_outline_blank</i>" +  "<div><i class='fa-solid fa-trash error_icon' onclick=remover(`"+ x.nombre +"`)></i></div>" + "</p></div>")
+        }
+        
         document.getElementById("productos").innerHTML = text.join("");
         productosjson = JSON.stringify(productos);
         localStorage.removeItem("productos");
@@ -355,12 +409,24 @@ function limpiarlista(){
         productosjson = JSON.stringify(productos);
         total = 0;
         contadorproductos = 0;
+        lista_tachados = [];
+        totaltachados = 0;
         localStorage.removeItem("productos");
         localStorage.removeItem("total");
         localStorage.removeItem("contadorproductos");
         localStorage.setItem("productos", productosjson)
         localStorage.setItem("total", total)
         localStorage.setItem("contadorproductos", contadorproductos);
+
+        lista_tachadosjson = JSON.stringify(lista_tachados)
+        localStorage.removeItem("lista_tachados")
+        localStorage.setItem("lista_tachados", lista_tachadosjson)
+        localStorage.removeItem("totaltachados")
+        localStorage.setItem("totaltachados", totaltachados)
+
+
+
+
 
         renderproducts();
         calcularrestante();
@@ -407,7 +473,6 @@ descuentos.push(new Descuento ("Comercios de barrio",35,3000,"Sabado de enero a 
 function opciones_descuentos(){
     let i = 1;
     let opcion = '<option value="1" selected>Elija una promocion</option>';
-    console.log(typeof lista_descuentos)
     for (let x of lista_descuentos){
             i++
             opcion += '<option value="'+ i +'">'+ x.nombre + x.descuento + x.topedereintegro + x.fecha +' </option>';
@@ -491,7 +556,7 @@ function sumrestcuentas(simbolo){
         else{
             contador_cuentas--
             document.getElementById("contadorsumaresta").innerHTML = contador_cuentas;
-            localStorage.removeItem("contador_cuentas", contador_cuentas)
+            localStorage.removeItem("contador_cuentas")
             localStorage.setItem("contador_cuentas", contador_cuentas)
             calcularrestante()
             renderdescuentos()
@@ -501,7 +566,7 @@ function sumrestcuentas(simbolo){
     else{
         contador_cuentas++
         document.getElementById("contadorsumaresta").innerHTML = contador_cuentas;
-        localStorage.removeItem("contador_cuentas", contador_cuentas)
+        localStorage.removeItem("contador_cuentas")
         localStorage.setItem("contador_cuentas", JSON.stringify(contador_cuentas))
         calcularrestante()
         renderdescuentos()
@@ -530,6 +595,14 @@ if (backup("contadorproductos", contadorproductos)){
 if (backup("contador_cuentas", contador_cuentas)){
     contador_cuentas = Number(backup("contador_cuentas", contador_cuentas))
 }
+
+if (backup("lista_tachados", lista_tachadosjson)){
+    lista_tachados = JSON.parse(backup("lista_tachados", lista_tachadosjson))}
+
+if (backup("totaltachados", totaltachados)){
+    totaltachados = Number(backup("totaltachados", totaltachados))
+}
+
 // if (backup("lista_descuentos", lista_descuentosjson)){
 //     lista_descuentos = JSON.parse(backup("lista_descuentos", lista_descuentosjson))
 //     reincorporarlista_descuentos()

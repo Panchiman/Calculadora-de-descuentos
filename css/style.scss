@@ -47,6 +47,11 @@ body{
             .products{
                 display: flex;
                 justify-content: space-around;
+                button{
+                    border-style: hidden;
+                    width: 30px;
+                    background-color: rgb(231, 231, 231);
+                }
                 .tachado{
                         text-decoration: line-through;
                 }
@@ -54,10 +59,11 @@ body{
                     width: 50px;
                 }
                 i{
-                    cursor: pointer;
                     font-size: 28px;
                     margin-left: 15px;
                     display: inline-block;
+                    position: relative;
+                    right: 18px;
                     }
                 
                 .edit_icon{
@@ -68,6 +74,9 @@ body{
                     color: green;
                     position: relative;
                     font-size: 25px;
+            }
+            .disabled_icon{
+                color: grey;
             }
             }
 

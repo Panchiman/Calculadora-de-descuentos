@@ -82,6 +82,12 @@ body main .products_container .products {
       justify-content: space-around;
 }
 
+body main .products_container .products button {
+  border-style: hidden;
+  width: 30px;
+  background-color: #e7e7e7;
+}
+
 body main .products_container .products .tachado {
   text-decoration: line-through;
 }
@@ -91,10 +97,11 @@ body main .products_container .products select {
 }
 
 body main .products_container .products i {
-  cursor: pointer;
   font-size: 28px;
   margin-left: 15px;
   display: inline-block;
+  position: relative;
+  right: 18px;
 }
 
 body main .products_container .products .edit_icon {
@@ -106,5 +113,9 @@ body main .products_container .products .error_icon {
   color: green;
   position: relative;
   font-size: 25px;
+}
+
+body main .products_container .products .disabled_icon {
+  color: grey;
 }
 /*# sourceMappingURL=style.css.map */

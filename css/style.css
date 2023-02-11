@@ -28,25 +28,53 @@ body main .error {
   font-size: 1rem;
 }
 
-body main #descuentos {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+body main .discount_container #descuentos {
+  display: none;
 }
 
-body main #numdescuento {
+body main .discount_container #numdescuento {
   min-width: 150px;
 }
 
-body .products_container {
+body main .text-container #numerocuentas {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+body main .text-container #numerocuentas #sumaresta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+body main .text-container #numerocuentas #sumaresta button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 30px;
+  width: 30px;
+}
+
+body main .products_container {
   background-color: #e7e7e7;
 }
 
-body .products_container .products {
+body main .products_container .products {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -54,23 +82,23 @@ body .products_container .products {
       justify-content: space-around;
 }
 
-body .products_container .products select {
+body main .products_container .products select {
   width: 50px;
 }
 
-body .products_container .products i {
+body main .products_container .products i {
   cursor: pointer;
   font-size: 28px;
   margin-left: 15px;
   display: inline-block;
 }
 
-body .products_container .products .edit_icon {
+body main .products_container .products .edit_icon {
   font-size: 25px;
   color: green;
 }
 
-body .products_container .products .error_icon {
+body main .products_container .products .error_icon {
   color: green;
   position: relative;
   font-size: 25px;

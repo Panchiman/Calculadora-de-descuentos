@@ -14,27 +14,31 @@
         <div>
             <div class="discount_container">
                 <h1>Calculadora de descuentos:</h1>
-                <h3>Ingrese un numero de descuento y un tope de reintegro</h3>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <h3>Banco del descuento:</h3>
+                <select class="form-select" id="bancos" aria-label="Default select example" onchange='cambiarbanco()'>
+                    <option selected>Seleccione un banco</option>
+                    <option value="1">Cuenta DNI</option>
+                    <option value="2">BNA+</option>
+                    <option value="99">Otro</option>
                 </select>
-                
-                <button>Agregar otro descuento</button>
-                <form id="descuentos">
+                <p id="selector_descuentos"></p>
+                <form id="descuentos_otros" style="display: none;">
                     <input type="text" min="1" max="30" name="nombredescuento" id="nombredescuento" placeholder="Nombre del descuento">
                     <input type="number" min="1" max="100" name="descuento" id="numdescuento" placeholder="Numero de descuento">
                     <input type="number" min="1" max="999999999" name="topereinte" id="topereinte" placeholder="Tope de reintegro">
+                    <input type="text" max="30" name="fechadescuento" id="fechadescuento" placeholder="Fecha del descuento">
                     <button type="submit">Enviar</button>
                 </form>
                 <p id="errordescuento"></p>
             </div>
-            <div>
+            <div class="text-container">
                 <p id="descuento">Porcentaje de descuento:</p>
                 <p id="topereintegro">Tope de reintegro:</p>
                 <p id="valormaximo">Valor a partir al que se llega al maximo descuento:</p>
+                <div id="numerocuentas"><p id="cuentas">Numero de cuentas: </p><div id="sumaresta"><button type="button" class="btn btn-light" onclick="sumrestcuentas(`-`)"><i class="material-icons">remove</i></button><p id="contadorsumaresta">1</p><button type="button" class="btn btn-light" onclick="sumrestcuentas(`+`)"><i class="material-icons">add</i></button></div></div>
+                <p id="errorcuentas"></p>
+                
+                <hr>
                 <form id="agregarproducto">
                     <input type="text" min="1" maxlength="25" name="nombre" id="nombreproducto" placeholder="Nombre del producto">
                     <input type="number" min="1" max="999999999" name="precio" id="precioproducto" placeholder="Precio del producto">
@@ -49,7 +53,6 @@
                     <p id="restante">Restante para gastar:</p>
                 </div>
                 <button onclick="limpiarlista()">Limpiar lista</button>
-                <button onclick="guardarlista()">Guardar progreso</button>
                 <form id="busquedanombre">
                     <label for="nombre">Buscar por nombre:</label>
                     <input type="text" min="1" name="nombre" id="nombreproductobusqueda" placeholder="Nombre del producto">

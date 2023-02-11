@@ -19,13 +19,27 @@ body{
             font-size: 1rem;
         }
         .discount_container{
-            }
             #descuentos{
-                display: flex;
-                flex-direction: column;
+                display: none;
             }
             #numdescuento{
                 min-width: 150px;
+            }}
+        .text-container{
+            #numerocuentas{
+                display: flex;
+                flex-direction: row;
+                #sumaresta{
+                    display: flex;
+                    flex-direction: row;
+                    button{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 30px;
+                        width: 30px;
+                    }
+                }
             }
         }
         .products_container{
@@ -55,5 +69,5 @@ body{
             }
 
     }
-}
+}}
 

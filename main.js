@@ -24,7 +24,7 @@ let totaldescontado = 0;
 // Esta variable es el % del descuento
 let descuento = 0;
 let topereintegro = 0;
-let formularioDescuentos = document.getElementById("descuentos");
+let formularioDescuentos = document.getElementById("descuentos_otros");
 let formulariobusquedanombre = document.getElementById("busquedanombre");
 let formulariobusquedaprecio = document.getElementById("busquedaprecio");
 
@@ -35,8 +35,19 @@ let nombreproductob ="";
 let precio = 0;
 // en este json se va a guardar el array de productos convertido a json
 let productosjson = "";
+let lista_descuentosjson ="";
 //Esta funcion es para que si el numero tiene decimales solo se muestren los ultimos 2
-
+let banco = "";
+let lista_descuentos = [];
+let contador_cuentas = 1;
+function backup (key,variable){
+    if (localStorage.getItem(key, variable)){
+        return localStorage.getItem(key, variable)
+    }
+    else{
+        return false
+    }
+}
 
 
 function tofixear2(numero){
@@ -59,9 +70,15 @@ function renderdescuentos(){
     //let  topereintegro = prompt("Ingrese el tope de descuento");
 
     //En esta variable esta el calculo del maximo que uno puede gastar para que se aplique el descuento a todo.
-    descmaximo = tofixear2((topereintegro * 100) / descuento);
-
-    document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<b>" + topereintegro + "</b>" + " pesos.";
+    if (descuento == 0 || topereintegro == 0 ){
+        descmaximo = 0;
+    }
+    else{
+        descmaximo = (tofixear2((topereintegro * 100) / descuento)) * contador_cuentas;
+    }
+    console.log(descuento)
+    console.log(topereintegro)
+    document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<b>" + (topereintegro * contador_cuentas) + "</b>" + " pesos.";
 
     document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es: " +  "<b>" + descmaximo + "</b>" + " pesos.";
 }
@@ -94,6 +111,7 @@ function calculartotales(){
     document.getElementById("total").innerHTML = "<b>Total sin descuento: </b>" + total + "<b>, total con descuento: </b>" + totalcondect+ "<b>, total descontado: </b>" + totaldescontado;
     //Muestra la variable con toda la info de los productos
     document.getElementById("productos").innerHTML = text.join("");
+    localStorage.setItem("total", total)
 }
 
 function comprobarnombres(product){
@@ -103,24 +121,18 @@ function comprobarnombres(product){
 function comprobarnombresb(product){
     return product.nombre === nombrebusquedab;
 }
-//este evento es para registrar el descuento y el tope de reintegro por el formulario y dar un error en caso de ser necesario
-formularioDescuentos.addEventListener("submit", function(event){
-    event.preventDefault()
-    let inputdescuento = document.getElementById("numdescuento")
-    let inputtopereinte = document.getElementById("topereinte")
-    descuento = Number(inputdescuento.value);
-    topereintegro = Number(inputtopereinte.value);
-    if (topereintegro === 0 || descuento === 0){
-        document.getElementById("errordescuento").innerHTML = "<p class='error'>Debe llenar ambos campos</p>"
-    }
-    else {
-        document.getElementById("errordescuento").innerHTML = ""
-        renderdescuentos()
-        renderproducts()
-    }
-})
 
 
+
+class Descuento{
+    constructor(nombre, descuento, topedereintegro, fecha = "Sin definir", banco = "otro"){
+        this.nombre = nombre;
+        this.descuento = descuento;
+        this.topedereintegro = topedereintegro;
+        this.fecha = fecha;
+        this.banco = banco;
+    }
+}
 
 
 
@@ -129,11 +141,13 @@ formularioDescuentos.addEventListener("submit", function(event){
 
 //clase para construir los distintos productos, con el nombre del producto, el precio y el precio con el descuento del mismo.
 class Producto {
-    constructor(nombre, precio){
+    constructor(nombre, precio, cantidad = 1){
         this.nombre = nombre;
         this.precio = precio;
-        this.preciocondesct = tofixear2 (this.precio - restdescuento(descuento,this.precio));
-        this.cantidad = 1;
+        this.preciocondesct = function(){
+            return tofixear2 (this.precio - restdescuento(descuento,this.precio))
+        };
+        this.cantidad = cantidad;
     }
 }
 
@@ -142,8 +156,13 @@ function renderproducts(){
     let i = 0;
     for (let x of productos){
         i++
-        text.push("<div class='products'><p><b>Producto: </b>" + x.nombre+ "<b> - Cantidad: </b>" +"<select id='select"+ i + "' onchange='cambiarcantidad(`"+ x.nombre +"`)'>" + selectfunction(x.cantidad) + "</select>" + "<b> - Precio: </b>" + x.precio * x.cantidad + "("+ x.precio +" c/u)" + "<b> - Precio con el descuento: </b>" + x.preciocondesct * x.cantidad + "("+ x.preciocondesct +" c/u)" + "<div><i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_product(`"+ x.nombre +"`)></i>" + "<i class='fa-solid fa-trash error_icon' onclick=remover(`"+ x.nombre +"`)></i></div>" + "</p></div>")
+        text.push("<div class='products'><p><b>Producto: </b>" + x.nombre+ "<i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productnombre(`"+ x.nombre +"`)></i>" + "<b> - Cantidad: </b>" +"<select id='select"+ i + "' onchange='cambiarcantidad(`"+ x.nombre +"`)'>" + selectfunction(x.cantidad) + "</select>" + "<b> - Precio: </b>" + x.precio * x.cantidad + " ("+ x.precio +" c/u)" + "<i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productprecio(`"+ x.nombre +"`)></i>" + "<b> - Precio con el descuento: </b>" + x.preciocondesct() * x.cantidad + " ("+ x.preciocondesct() +" c/u)" + "<div><i class='fa-solid fa-trash error_icon' onclick=remover(`"+ x.nombre +"`)></i></div>" + "</p></div>")
         document.getElementById("productos").innerHTML = text.join("");
+        productosjson = JSON.stringify(productos);
+        localStorage.removeItem("productos");
+        localStorage.setItem("productos", productosjson)
+        localStorage.removeItem("contadorproductos");
+        localStorage.setItem("contadorproductos", contadorproductos);
         calcularrestante();
         calculartotales();
 }}
@@ -159,6 +178,7 @@ function  cambiarcantidad(objeto){
     renderproducts()
 }
 
+
 function selectfunction(objeto){
     let select = [];
     for (let i = 1; i < 100; i++) {
@@ -168,7 +188,6 @@ function selectfunction(objeto){
             select.splice(objeto - 1,1,opcion);
         }
     }
-    console.log(select.join(""))
     return select.join("")
 }
 
@@ -256,30 +275,48 @@ else{
 }
 })
 
-function edit_product(nombreaeditar){
+function edit_productprecio(nombreaeditar){
     let index = productos.findIndex(producto => producto.nombre === nombreaeditar);
-    const { value: formValues } = Swal.fire({
-        title: 'Multiple inputs',
-        html:
-        '<label for="nombreproduct">Nombre del producto:</label>' +
-        '<input id="swal-input1" type="text" value="'+ productos[index].nombre +'" name="nombreproduct" class="swal2-input">' +
-        '<label for="precioproducto">Nombre del producto:</label>' +
-        '<input id="swal-input2" type="number" value="'+ productos[index].precio +'" name="precioproducto" class="swal2-input">',
-    focusConfirm: false,
-    showCancelButton: true,
-    preConfirm: () => {
-        return [
+    Swal.fire({
+        title: 'Editar el precio del producto',
+        input: 'number',
+        inputLabel: 'Nombre actual: ' + productos[index].nombre,
+        showCancelButton: true,
+        inputValidator: (value) => {
+            if (!value) {
+            return 'Por favor introduce un precio para el producto.'
+            }
+        },
+        inputValidator: (value) => {
             total -= productos[index].precio * productos[index].cantidad,
-            productos[index].nombre = document.getElementById('swal-input1').value,
-            productos[index].precio = Number(document.getElementById('swal-input2').value),
+            productos[index].precio = Number(value),
             total += productos[index].precio * productos[index].cantidad,
-            productos[index].preciocondesct = tofixear2 (productos[index].precio - restdescuento(descuento,productos[index].precio)),
+            productos[index].preciocondesct(),
             calcularrestante(),
             calculartotales(),
-            renderproducts()
-        ]
-    }
+            renderproducts();
+        }
     })
+}
+
+
+
+function edit_productnombre(nombreaeditar){
+    let index = productos.findIndex(producto => producto.nombre === nombreaeditar);
+    Swal.fire({
+        title: 'Editar el nombre del producto',
+        input: 'text',
+        inputLabel: 'Nombre actual: ' + productos[index].nombre,
+        showCancelButton: true,
+        inputValidator: (value) => {
+            if (!value) {
+            return 'Por favor introduce un nombre para el producto.'
+            }
+        },
+        inputValidator: (value) => {
+            productos[index].nombre = value;
+            renderproducts();}
+        })
 
 }
 
@@ -315,9 +352,15 @@ function limpiarlista(){
         if (result.isConfirmed) {
         Swal.fire('Lista borrada!', '', 'success')
         productos = [];
+        productosjson = JSON.stringify(productos);
         total = 0;
         contadorproductos = 0;
-        document.getElementById("errortopeproducto").innerHTML = "";
+        localStorage.removeItem("productos");
+        localStorage.removeItem("total");
+        localStorage.removeItem("contadorproductos");
+        localStorage.setItem("productos", productosjson)
+        localStorage.setItem("total", total)
+        localStorage.setItem("contadorproductos", contadorproductos);
 
         renderproducts();
         calcularrestante();
@@ -328,35 +371,180 @@ function limpiarlista(){
     })
 }
 
+
 // Esta variable es para llevar registro si la lista fue guardada o no
 let listaguardada = null;
 
-//esta funcion es para guardar todas las variables en el localstorage, originalmente iba a ser que se guarden automaticamente todo el tiempo, pero me parecio que por ahi era molesto si no querias que se guarden.
-function guardarlista(){
-    listaguardada = true;
-    localStorage.setItem("descuento", descuento);
-    localStorage.setItem("topereintegro", topereintegro);
-    productosjson = JSON.stringify(productos);
-    localStorage.setItem("productos", productosjson)
-    localStorage.setItem("contadorproductos", contadorproductos);
-    localStorage.setItem("total", total)
-    localStorage.setItem("listaguardada", listaguardada);
-    Swal.fire({
-        icon: 'success',
-        title: 'Progreso guardado guardada',
-    })
+function reincorporarproductos(){
+    let contador = 0;
+    let listatemporal = [];
+    for (let x of productos){
+    listatemporal[contador] = new Producto (x.nombre, x.precio, x.cantidad)
+    contador++
+    }
+    productos = listatemporal
 }
 
-listaguardada = localStorage.getItem("listaguardada");
-if ((listaguardada != null)){
-    descuento = Number(localStorage.getItem("descuento", descuento));
-    topereintegro = Number(localStorage.getItem("topereintegro", topereintegro));
-    total = Number(localStorage.getItem("total", total));
-    productosjson = localStorage.getItem("productos", productosjson);
-    productos = JSON.parse(productosjson);
-    contadorproductos = Number(localStorage.getItem("contadorproductos", contadorproductos));
-    renderdescuentos()
-    calcularrestante()
-    calculartotales()
-    renderproducts()
+function reincorporarlista_descuentos(){
+    let contador = 0;
+    let listatemporal = [];
+    for (let x of lista_descuentos){
+    listatemporal[contador] = new Descuento (x.nombre, x.descuento, x.topedereintegro, x.fecha)
+    contador++
+    }
+    lista_descuentos = listatemporal
 }
+
+
+//esta funcion es para guardar todas las variables en el localstorage, originalmente iba a ser que se guarden automaticamente todo el tiempo, pero me parecio que por ahi era molesto si no querias que se guarden.
+listaguardada = localStorage.getItem("listaguardada");
+
+
+let descuentos = [];
+descuentos.push(new Descuento ("Combustible", 10, 400, "Viernes de enero a marzo", "Cuenta DNI"))
+descuentos.push(new Descuento ("Comercios de barrio",35,3000,"Sabado de enero a marzo", "Cuenta DNI"))
+
+function opciones_descuentos(){
+    let i = 1;
+    let opcion = '<option value="1" selected>Elija una promocion</option>';
+    console.log(typeof lista_descuentos)
+    for (let x of lista_descuentos){
+            i++
+            opcion += '<option value="'+ i +'">'+ x.nombre + x.descuento + x.topedereintegro + x.fecha +' </option>';
+            }
+            let select = "<select id='selectordescuento' onchange='cambiardescuento()'>" + opcion + "</select>"
+            document.getElementById("selector_descuentos").innerHTML = select;
+}
+
+
+function cambiarbanco(){
+    banco = document.getElementById("bancos").value;
+    if (banco == 1){
+        fetch("descuentos_cuentadni.json")
+            .then((resp) => resp.json())
+            .then((data) => {
+                document.getElementById("descuentos_otros").style.display = "none";
+                lista_descuentos = data;
+                opciones_descuentos()
+                })
+        }
+    else if ( banco == 2){
+        fetch("descuentos_bna.json")
+            .then((resp) => resp.json())
+            .then((data) => {
+                document.getElementById("descuentos_otros").style.display = "none";
+                lista_descuentos = data;
+                opciones_descuentos()
+                })
+    }
+    else{
+        document.getElementById("descuentos_otros").style.display = "flex";
+        if (backup("lista_descuentos", lista_descuentosjson)){
+            lista_descuentos = JSON.parse(backup("lista_descuentos", lista_descuentosjson));
+        }
+        else{
+            lista_descuentos = [];
+        }
+        opciones_descuentos()
+    }
+}
+function cambiardescuento(){
+    let id = document.getElementById("selectordescuento").value;
+    if (id != 1){
+        descuento = lista_descuentos[id-2].descuento;
+        topereintegro = lista_descuentos[id-2].topedereintegro;
+        localStorage.removeItem("descuento");
+        localStorage.setItem("descuento", descuento);
+        localStorage.removeItem("topereintegro");
+        localStorage.setItem("topereintegro", topereintegro);
+        renderdescuentos()
+        calcularrestante()
+        calculartotales()
+        renderproducts()
+    }
+}
+
+//este evento es para registrar el descuento y el tope de reintegro por el formulario y dar un error en caso de ser necesario
+formularioDescuentos.addEventListener("submit", function(event){
+    event.preventDefault()
+    let inputnombre = document.getElementById("nombredescuento").value
+    let inputdescuento = Number(document.getElementById("numdescuento").value)
+    let inputtopereinte = Number(document.getElementById("topereinte").value)
+    let inputfecha = document.getElementById("fechadescuento").value
+    if (inputnombre === null || inputtopereinte === 0 || inputdescuento === 0){
+        document.getElementById("errordescuento").innerHTML = "<p class='error'>Por lo menos debe poner nombre, numero de descuento y del tope de reintegro</p>"
+    }
+    else {
+        document.getElementById("errordescuento").innerHTML = "";
+        lista_descuentos.push(new Descuento (inputnombre,inputdescuento,inputtopereinte,inputfecha))
+        lista_descuentosjson = JSON.stringify(lista_descuentos)
+        localStorage.removeItem("lista_descuentos");
+        localStorage.setItem("lista_descuentos", lista_descuentosjson)
+        opciones_descuentos()
+    }
+})
+
+function sumrestcuentas(simbolo){
+    if (simbolo == "-"){
+        if (contador_cuentas == 1){
+        }
+        else{
+            contador_cuentas--
+            document.getElementById("contadorsumaresta").innerHTML = contador_cuentas;
+            localStorage.removeItem("contador_cuentas", contador_cuentas)
+            localStorage.setItem("contador_cuentas", contador_cuentas)
+            calcularrestante()
+            renderdescuentos()
+            calcularrestante()
+        }
+    }
+    else{
+        contador_cuentas++
+        document.getElementById("contadorsumaresta").innerHTML = contador_cuentas;
+        localStorage.removeItem("contador_cuentas", contador_cuentas)
+        localStorage.setItem("contador_cuentas", JSON.stringify(contador_cuentas))
+        calcularrestante()
+        renderdescuentos()
+        calcularrestante()
+    }
+}
+
+
+
+if (backup("descuento", descuento)){
+    descuento = Number(backup("descuento", descuento))
+}
+if (backup("topereintegro", topereintegro)){
+    topereintegro = Number(backup("topereintegro", topereintegro))
+}
+if (backup("total", total)){
+    total = Number(backup("total", total))
+}
+if (backup("productos", productosjson)){
+    productos = JSON.parse(backup("productos", productosjson))
+    reincorporarproductos()
+}
+if (backup("contadorproductos", contadorproductos)){
+    contadorproductos = Number(backup("contadorproductos", contadorproductos))
+}
+if (backup("contador_cuentas", contador_cuentas)){
+    contador_cuentas = Number(backup("contador_cuentas", contador_cuentas))
+}
+// if (backup("lista_descuentos", lista_descuentosjson)){
+//     lista_descuentos = JSON.parse(backup("lista_descuentos", lista_descuentosjson))
+//     reincorporarlista_descuentos()
+//     console.log(lista_descuentos)
+//     console.log(typeof lista_descuentos)
+// }
+
+// descuento = Number(localStorage.getItem("descuento", descuento));
+// topereintegro = Number(localStorage.getItem("topereintegro", topereintegro));
+// total = Number(localStorage.getItem("total", total));
+// productosjson = localStorage.getItem("productos", productosjson);
+// productos = JSON.parse(productosjson);
+// contadorproductos = Number(localStorage.getItem("contadorproductos", contadorproductos));
+// reincorporarproductos()
+renderdescuentos()
+calcularrestante()
+calculartotales()
+renderproducts()

@@ -43,6 +43,7 @@ let contador_cuentas = 1;
 let lista_tachados = [];
 let lista_tachadosjson = [];
 let totaltachados = 0;
+let nombredeldescuento = "";
 
 function backup (key,variable){
     if (localStorage.getItem(key, variable)){
@@ -68,6 +69,8 @@ function comprobarnombresp(product){
 }
 
 function renderdescuentos(){
+    
+    document.getElementById("nombredeldescuento").innerHTML = "Nombre del descuento: " + "<b>" + nombredeldescuento  + "</b>";
     //al final use .innerHTML en lugar de alert() porque asi no desaparece la informacion y es mas comodo, lo mismo para todos los siguientes.
     document.getElementById("descuento").innerHTML = "Su numero de descuento es " + "<b>" + descuento +"%." + "</b>";
     //Esta variable es el tope que te devuelven, el maximo que te llegan a reintegrar. 
@@ -516,8 +519,11 @@ function cambiarbanco(){
 function cambiardescuento(){
     let id = document.getElementById("selectordescuento").value;
     if (id != 1){
+        nombredeldescuento = lista_descuentos[id-2].nombre;
         descuento = lista_descuentos[id-2].descuento;
         topereintegro = lista_descuentos[id-2].topedereintegro;
+        localStorage.removeItem("nombredeldescuento");
+        localStorage.setItem("nombredeldescuento", nombredeldescuento);
         localStorage.removeItem("descuento");
         localStorage.setItem("descuento", descuento);
         localStorage.removeItem("topereintegro");
@@ -574,8 +580,9 @@ function sumrestcuentas(simbolo){
     }
 }
 
-
-
+if (backup("nombredeldescuento", nombredeldescuento)){
+    nombredeldescuento = backup("nombredeldescuento", nombredeldescuento)
+}
 if (backup("descuento", descuento)){
     descuento = Number(backup("descuento", descuento))
 }

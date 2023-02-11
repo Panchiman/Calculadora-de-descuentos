@@ -19,6 +19,9 @@ body{
             font-size: 1rem;
         }
         .discount_container{
+            select{
+                max-width: 300px;
+            }
             #descuentos{
                 display: none;
             }

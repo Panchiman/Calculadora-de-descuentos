@@ -28,6 +28,10 @@ body main .error {
   font-size: 1rem;
 }
 
+body main .discount_container select {
+  max-width: 300px;
+}
+
 body main .discount_container #descuentos {
   display: none;
 }

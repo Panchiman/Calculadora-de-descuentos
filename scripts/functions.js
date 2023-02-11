@@ -39,6 +39,8 @@ function renderdescuentos(){
     document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<b>" + (topereintegro * contador_cuentas) + "</b>" + " pesos.";
 
     document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es: " +  "<b>" + descmaximo + "</b>" + " pesos.";
+    document.getElementById("contadorsumaresta").innerHTML = contador_cuentas;
+
 }
 
 

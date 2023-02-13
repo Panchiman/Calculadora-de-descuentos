@@ -184,6 +184,9 @@ body{
             .products{
                 display: flex;
                 justify-content: space-between;
+                select{
+                    margin-right: 5px;
+                }
                 .bold-text{
                     margin-right: 5px;
                 }

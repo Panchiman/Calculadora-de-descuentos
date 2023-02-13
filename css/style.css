@@ -276,6 +276,10 @@ body main .products_container .products {
           justify-content: space-between;
 }
 
+body main .products_container .products select {
+  margin-right: 5px;
+}
+
 body main .products_container .products .bold-text {
   margin-right: 5px;
 }

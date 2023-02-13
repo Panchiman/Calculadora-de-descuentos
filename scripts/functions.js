@@ -413,7 +413,14 @@ function reincorporarlista_descuentos(){
 
 function opciones_descuentos(){
     let i = 1;
-    let opcion = '<option value="1" selected>Elija una promocion</option>';
+    let opcion;
+    if (lista_descuentos.length == 0){
+        opcion = '<option value="1" selected>Agregue un descuento</option>'
+    }
+    else{
+        console.log(lista_descuentos)
+        opcion = '<option value="1" selected>Elija una promocion</option>';
+    }
     for (let x of lista_descuentos){
             i++
             opcion += `<option value="${i}">${x.nombre} - ${x.descuento}% - ${x.topedereintegro}$ - ${x.fecha}</option>`;

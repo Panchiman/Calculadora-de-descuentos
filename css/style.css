@@ -29,6 +29,19 @@ body .btn:active {
   background-color: #027b02;
 }
 
+body .importante {
+  color: #01a101;
+  font-weight: 700;
+}
+
+body h1 {
+  color: #027b02;
+  font-weight: 700;
+  text-decoration: underline;
+  padding-top: 15px;
+  margin-bottom: 15px;
+}
+
 body main {
   display: -webkit-box;
   display: -ms-flexbox;

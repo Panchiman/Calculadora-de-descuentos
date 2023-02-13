@@ -27,6 +27,17 @@ body{
             background-color: $color-verde-oscuro;
         }
     }
+    .importante{
+        color: $color-verde;
+        font-weight: 700;
+    }
+    h1{
+        color: $color-verde-oscuro;
+        font-weight: 700;
+        text-decoration: underline;
+        padding-top: 15px;
+        margin-bottom: 15px;
+    }
     main{
         display: flex;
         flex-direction: column;

@@ -23,9 +23,9 @@ function comprobarnombresp(product){
 
 function renderdescuentos(){
     
-    document.getElementById("nombredeldescuento").innerHTML = "Nombre del descuento: " + "<span class='bold-text'>" + nombredeldescuento  + "</span>";
+    document.getElementById("nombredeldescuento").innerHTML = "Nombre del descuento: " + "<span class='bold-text importante'>" + nombredeldescuento  + "</span>";
     //al final use .innerHTML en lugar de alert() porque asi no desaparece la informacion y es mas comodo, lo mismo para todos los siguientes.
-    document.getElementById("descuento").innerHTML = "Su numero de descuento es " + "<span class='bold-text'>" + descuento +"%." + "</span>";
+    document.getElementById("descuento").innerHTML = "Su porcentaje de descuento es " + "<span class='bold-text importante'>" + descuento +"%." + "</span>";
     //Esta variable es el tope que te devuelven, el maximo que te llegan a reintegrar. 
     //let  topereintegro = prompt("Ingrese el tope de descuento");
 
@@ -36,9 +36,9 @@ function renderdescuentos(){
     else{
         descmaximo = (tofixear2((topereintegro * 100) / descuento)) * contador_cuentas;
     }
-    document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<span class='bold-text'>" + (topereintegro * contador_cuentas) + "</span>" + " pesos.";
+    document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<span class='bold-text importante'>" + (topereintegro * contador_cuentas) + "</span>" + " pesos.";
 
-    document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es de " +  "<span class='bold-text'>" + descmaximo + "</span>" + " pesos.";
+    document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es de " +  "<span class='bold-text importante'>" + descmaximo + "</span>" + " pesos.";
     document.getElementById("contadorsumaresta").innerHTML = contador_cuentas;
 
 }
@@ -68,7 +68,7 @@ function calculartotales(){
         totaldescontado = restdescuento(descuento,total);
     }
     //Muestra los totales:
-    document.getElementById("total").innerHTML = "<span class='bold-text'>Total sin descuento: </span>" + total + "<span class='bold-text'>, total con descuento: </span>" + totalcondect+ "<span class='bold-text'>, total descontado: </span>" + tofixear2(totaldescontado);
+    document.getElementById("total").innerHTML = `<span class='bold-text'>Total sin descuento: </span>${total}<span class='bold-text'>, total con descuento: </span>${totalcondect}<span class='bold-text'>, total descontado: </span><span>${tofixear2(totaldescontado)}</span>`
     //Muestra la variable con toda la info de los productos
     document.getElementById("productos").innerHTML = text.join("");
     localStorage.setItem("total", total)
@@ -412,9 +412,9 @@ function opciones_descuentos(){
     let opcion = '<option value="1" selected>Elija una promocion</option>';
     for (let x of lista_descuentos){
             i++
-            opcion += '<option value="'+ i +'">'+ x.nombre + x.descuento + x.topedereintegro + x.fecha +' </option>';
+            opcion += `<option value="'"${i}">${x.nombre} - ${x.descuento}% - ${x.topedereintegro}$ - ${x.fecha}</option>`;
             }
-            let select = "<select id='selectordescuento' class='form-select' aria-label='Default select example' onchange='cambiardescuento()'>" + opcion + "</select>"
+            let select = `<select id='selectordescuento' class='form-select' aria-label='Default select example' onchange='cambiardescuento()'>"${opcion}"</select>`
             document.getElementById("selector_descuentos").innerHTML = select;
 }
 

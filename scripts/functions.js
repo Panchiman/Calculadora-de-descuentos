@@ -373,14 +373,10 @@ function limpiarlista(){
         localStorage.setItem("lista_tachados", lista_tachadosjson)
         localStorage.removeItem("totaltachados")
         localStorage.setItem("totaltachados", totaltachados)
-
-
-
-
-
         renderproducts();
         calcularrestante();
         calculartotales();
+        document.getElementById("errortopeproducto").innerHTML = "";
         } else if (result.isDenied) {
         Swal.fire('No se elimino la lista', '', 'error')
         }

@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Calculadora de descuentos:</title>
 </head>
 <body>
     <main class="container-fluid">
-        <div>
+        <div class="main-container">
             <div class="discount_container">
                 <h1>Calculadora de descuentos:</h1>
-                <h3>Banco del descuento:</h3>
+                <label for="bancos"><h3>Banco del descuento:</h3></label>
                 <select class="form-select" id="bancos" aria-label="Default select example" onchange='cambiarbanco()'>
                     <option selected>Seleccione un banco</option>
                     <option value="1">Cuenta DNI</option>
@@ -23,61 +23,84 @@
                 </select>
                 <p id="selector_descuentos"></p>
                 <form id="descuentos_otros" style="display: none;">
-                    <input type="text" min="1" max="30" name="nombredescuento" id="nombredescuento" placeholder="Nombre del descuento">
-                    <input type="number" min="1" max="100" name="descuento" id="numdescuento" placeholder="Numero de descuento">
-                    <input type="number" min="1" max="999999999" name="topereinte" id="topereinte" placeholder="Tope de reintegro">
-                    <input type="text" max="30" name="fechadescuento" id="fechadescuento" placeholder="Fecha del descuento">
-                    <button type="submit">Enviar</button>
+                    <label for="nombredeldescuento" class="form-label">Nombre del descuento:</label>
+                    <input type="text" min="1" max="30" name="nombredescuento" id="nombredescuento" placeholder="Nombre del descuento" class="form-control">
+                    <label for="numdescuento" class="form-label">Numero del descuento (sin el %):</label>
+                    <input type="number" min="1" max="100" name="descuento" id="numdescuento" placeholder="Numero de descuento" class="form-control">
+                    <label for="topereinte" class="form-label">Tope de reintegro:</label>
+                    <input type="number" min="1" max="999999999" name="topereinte" id="topereinte" placeholder="Tope de reintegro" class="form-control">
+                    <label for="fechadescuento" class="form-label">Fecha del descuento:</label>
+                    <input type="text" max="30" name="fechadescuento" id="fechadescuento" placeholder="Fecha del descuento" class="form-control">
+                    <div class="boton-container"><button type="submit" class="btn btn-success">Enviar</button></div>
                 </form>
                 <p id="errordescuento"></p>
-                <div id="botones_otros" style="display: none;"><button type="button" class="btn btn-light" onclick="removerdeotros()">Quitar descuento de la lista</button><button type="button" class="btn btn-light" onclick="limpiarotros()">Borrar lista de descuentos</button></div>
+                <div id="botones_otros" style="display: none;"><button type="button" class="btn btn-danger borrar-icon" onclick="removerdeotros()">Quitar descuento de la lista</button><button type="button" class="btn btn-danger borrar-icon" onclick="limpiarotros()">Borrar lista de descuentos</button></div>
             </div>
             <div class="text-container">
                 <h3 id="nombredeldescuento"></h3>
                 <p id="descuento">Porcentaje de descuento:</p>
                 <p id="topereintegro">Tope de reintegro:</p>
                 <p id="valormaximo">Valor a partir al que se llega al maximo descuento:</p>
-                <div id="numerocuentas"><p id="cuentas">Numero de cuentas: </p><div id="sumaresta"><button type="button" class="btn btn-light" onclick="sumrestcuentas(`-`)"><i class="material-icons">remove</i></button><p id="contadorsumaresta">1</p><button type="button" class="btn btn-light" onclick="sumrestcuentas(`+`)"><i class="material-icons">add</i></button></div></div>
+                <div id="numerocuentas"><p id="cuentas">Numero de cuentas: </p><div id="sumaresta"><button type="button" class="btn btn-success" onclick="sumrestcuentas(`-`)"><i class="material-icons">remove</i></button><p id="contadorsumaresta">1</p><button type="button" class="btn btn-success" onclick="sumrestcuentas(`+`)"><i class="material-icons">add</i></button></div></div>
                 <p id="errorcuentas"></p>
                 
                 <hr>
-                <form id="agregarproducto">
-                    <input type="text" min="1" maxlength="25" name="nombre" id="nombreproducto" placeholder="Nombre del producto">
-                    <input type="number" min="1" max="999999999" name="precio" id="precioproducto" placeholder="Precio del producto">
-                    <button type="submit">Enviar</button>
+                <form id="agregarproducto" class="form-inline">
+                    <div>
+                        <label for="nombreproducto">Nombre del producto:</label>
+                        <input type="text" min="1" maxlength="25" name="nombre" id="nombreproducto" placeholder="Nombre del producto">
+                    </div>
+                    <div>
+                        <label for="precioproducto">Precio del producto:</label>
+                        <input type="number" min="1" max="999999999" name="precio" id="precioproducto" placeholder="Precio del producto" class="inputprecio">
+                    </div>
+                    <button type="submit" class="btn btn-success">Enviar</button>
                 </form>
                 <p id="errorproducto"></p>
-                <div class="products_container">
+                <div class="products_container container-fluid">
                     <h3 >Productos:</h3>
+                    <hr>
                     <p id="productos">No hay ningun producto:</p>
                     <p id="errortopeproducto"></p>
                     <p id="total">Total:</p>
                     <p id="restante">Restante para gastar:</p>
                 </div>
-                <button onclick="limpiarlista()">Limpiar lista</button>
-                <form id="busquedanombre">
-                    <label for="nombre">Buscar por nombre:</label>
-                    <input type="text" min="1" name="nombre" id="nombreproductobusqueda" placeholder="Nombre del producto">
-                    <button type="submit">Enviar</button>
-                </form>
-                <form id="busquedaprecio">
-                    <label for="precio">Buscar por precio</label>
-                    <input type="number" min="1" name="precio" id="precioproductobusqueda" placeholder="Precio del producto">
-                    <button type="submit">Enviar</button>
-                </form>
+                <button onclick="limpiarlista()" class="btn btn-danger boton-limpiar borrar-icon">Limpiar lista</button>
+                <div class="buscadores">
+                    <form id="busquedanombre">
+                        <label for="nombre">Buscar por nombre:</label>
+                        <input type="text" min="1" name="nombre" id="nombreproductobusqueda" placeholder="Nombre del producto">
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </form>
+                    <form id="busquedaprecio">
+                        <label for="precio">Buscar por precio</label>
+                        <input type="number" min="1" name="precio" id="precioproductobusqueda" placeholder="Precio del producto">
+                        <button id="boton" type="submit" class="btn btn-success">Enviar</button>
+                    </form></div>
             </div>
 
         </div>
     </main>
     <footer>
-        <p>v.1.5</p>
+        <div class="container">
+            <div class="footer">
+                <p><span class="bold-text">Pagina creada por:</span></p>
+                <p>Angel Saldias Desarrollo Web</p>
+                <div class="redes">
+                    <a href="https://wa.me/5492364332993" target="_blank"><i class="fab fa-whatsapp wspp"></i><p>+54-92364-332993</p></a>
+                    <a href="mailto:panchiman9999@gmail.com"><i class="fa-regular fa-envelope mail"></i><p>panchiman9999@gmail.com</p></a>
+                </div>
+            </div>
+            <p class="version"><span class="bold-text">Version: </span>2.0</p>
+        </div>
     </footer>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./scripts/variables.js"></script>
     <script src="./scripts/classes.js"></script>
     <script src="./scripts/functions.js"></script>
     <script src="./scripts/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/61a49c53b8.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -23,9 +23,9 @@ function comprobarnombresp(product){
 
 function renderdescuentos(){
     
-    document.getElementById("nombredeldescuento").innerHTML = "Nombre del descuento: " + "<b>" + nombredeldescuento  + "</b>";
+    document.getElementById("nombredeldescuento").innerHTML = "Nombre del descuento: " + "<span class='bold-text'>" + nombredeldescuento  + "</span>";
     //al final use .innerHTML en lugar de alert() porque asi no desaparece la informacion y es mas comodo, lo mismo para todos los siguientes.
-    document.getElementById("descuento").innerHTML = "Su numero de descuento es " + "<b>" + descuento +"%." + "</b>";
+    document.getElementById("descuento").innerHTML = "Su numero de descuento es " + "<span class='bold-text'>" + descuento +"%." + "</span>";
     //Esta variable es el tope que te devuelven, el maximo que te llegan a reintegrar. 
     //let  topereintegro = prompt("Ingrese el tope de descuento");
 
@@ -36,9 +36,9 @@ function renderdescuentos(){
     else{
         descmaximo = (tofixear2((topereintegro * 100) / descuento)) * contador_cuentas;
     }
-    document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<b>" + (topereintegro * contador_cuentas) + "</b>" + " pesos.";
+    document.getElementById("topereintegro").innerHTML = "El tope de reintegro es de " + "<span class='bold-text'>" + (topereintegro * contador_cuentas) + "</span>" + " pesos.";
 
-    document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es: " +  "<b>" + descmaximo + "</b>" + " pesos.";
+    document.getElementById("valormaximo").innerHTML = "El monto maximo hasta donde aplica el descuento es de " +  "<span class='bold-text'>" + descmaximo + "</span>" + " pesos.";
     document.getElementById("contadorsumaresta").innerHTML = contador_cuentas;
 
 }
@@ -48,11 +48,11 @@ function renderdescuentos(){
 function calcularrestante(){
     restante = descmaximo - total;
     if (restante < 0){
-        restante = "<b>Te pasaste del maximo por </b>" + Math.abs(restante) + " pesos"
+        restante = "<span class='bold-text'>Te pasaste del maximo por </span>" + Math.abs(restante) + " pesos"
     }
     else{
         restante = tofixear2(restante);
-        restante = "Te quedan " + "<b>" + restante + "</b>" + " pesos para llegar al maximo donde el descuento se aplica."
+        restante = "Te quedan " + "<span class='bold-text'>" + restante + "</span>" + " pesos para llegar al maximo donde el descuento se aplica."
     }
     //muestra el restante para gastar.
     document.getElementById("restante").innerHTML = restante;
@@ -68,7 +68,7 @@ function calculartotales(){
         totaldescontado = restdescuento(descuento,total);
     }
     //Muestra los totales:
-    document.getElementById("total").innerHTML = "<b>Total sin descuento: </b>" + total + "<b>, total con descuento: </b>" + totalcondect+ "<b>, total descontado: </b>" + totaldescontado;
+    document.getElementById("total").innerHTML = "<span class='bold-text'>Total sin descuento: </span>" + total + "<span class='bold-text'>, total con descuento: </span>" + totalcondect+ "<span class='bold-text'>, total descontado: </span>" + tofixear2(totaldescontado);
     //Muestra la variable con toda la info de los productos
     document.getElementById("productos").innerHTML = text.join("");
     localStorage.setItem("total", total)
@@ -146,10 +146,10 @@ function renderproducts(){
     for (let x of productos){
         i++
         if (comprobartachadas(x)){
-            text.push("<div class='products'><p class='tachado'><b>Producto: </b>" + x.nombre+ "<button><i class='fa-solid fa-pen-to-square edit_icon disabled_icon'></i></button>" + "<b> - Cantidad: </b>" +"<select id='select"+ i + "' onchange='cambiarcantidad(`"+ x.nombre +"`)' disabled>" + selectfunction(x.cantidad) + "</select>" + "<b> - Precio: </b>" + x.precio * x.cantidad + " ("+ x.precio +" c/u)" + "<button><i class='fa-solid fa-pen-to-square edit_icon disabled_icon'></i></button>" + "<b> - Precio con el descuento: </b>" + x.preciocondesct() * x.cantidad + " ("+ x.preciocondesct() +" c/u)" + "<button><i class='material-icons' onclick=botontachadas(`" + x.nombre + "`)>check_box</i></button>" + "<div><button><i class='fa-solid fa-trash error_icon' onclick=remover(`"+ x.nombre +"`)></i></button></div>" + "</p></div>")
+            text.push(`<div class='products container-fluid'><div class='conjuto-productos'><div class='pcp'><div class='pc'><div></div><p class='tachado'><span class='bold-text'>Producto:</span>${x.nombre}<button><i class='fa-solid fa-pen-to-square edit_icon disabled_icon'></i></button></p><p class='tachado'><span class='bold-text'> - Cantidad:</span><select id='select${i}' onchange="cambiarcantidad('` + x.nombre + `')" disabled>${selectfunction(x.cantidad)}</select></p></div><div class='divprecios'><p class='tachado'><span class='bold-text'> - Precio:</span></p><p class='tachado'>${x.precio * x.cantidad} (${x.precio} c/u)<button><i class='fa-solid fa-pen-to-square edit_icon disabled_icon'></i></button></p></div></div><div class='preciod'><div class='divprecios'><p class='tachado'><span class='bold-text'> - Precio con descuento:</span></p><p class='tachado'>${x.preciocondesct() * x.cantidad} (${x.preciocondesct()} c/u)</p></div></div></div><div class='botones'><button><i class='material-icons' onclick=botontachadas('` + x.nombre + `')>check_box</i></button><button><i class='fa-solid fa-trash error_icon' onclick=remover('` + x.nombre + `')></i></button></div></div><hr>`)
         }
         else{
-            text.push("<div class='products'><p><b>Producto: </b>" + x.nombre+ "<button><i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productnombre(`"+ x.nombre +"`)></i></button>" + "<b> - Cantidad: </b>" +"<select id='select"+ i + "' onchange='cambiarcantidad(`"+ x.nombre +"`)'>" + selectfunction(x.cantidad) + "</select>" + "<b> - Precio: </b>" + x.precio * x.cantidad + " ("+ x.precio +" c/u)" + "<button><i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productprecio(`"+ x.nombre +"`)></i></button>" + "<b> - Precio con el descuento: </b>" + x.preciocondesct() * x.cantidad + " ("+ x.preciocondesct() +" c/u)" + "<button><i class='material-icons' onclick=botontachadas(`" + x.nombre + "`)>check_box_outline_blank</i></button>" +  "<div><button><i class='fa-solid fa-trash error_icon' onclick=remover(`"+ x.nombre +"`)></i></button></div>" + "</p></div>")
+            text.push(`<div class='products container-fluid'><div class='conjuto-productos'><div class='pcp'><div class='pc'><div></div><p><span class='bold-text'>Producto:</span>${x.nombre}<button><i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productnombre('` + x.nombre + `')></i></button></p><p><span class='bold-text'> - Cantidad:</span><select id='select${i}' onchange="cambiarcantidad('` + x.nombre + `')">${selectfunction(x.cantidad)}</select></p></div><div class='divprecios'><p><span class='bold-text'> - Precio:</span></p><p>${x.precio * x.cantidad} (${x.precio} c/u)<button><i class='fa-solid fa-pen-to-square edit_icon' onclick=edit_productprecio('` + x.nombre + `')></i></button></p></div></div><div class='preciod'><div class='divprecios'><p><span class='bold-text'> - Precio con descuento:</span></p><p>${x.preciocondesct() * x.cantidad} (${x.preciocondesct()} c/u)</p></div></div></div><div class='botones'><button><i class='material-icons' onclick=botontachadas('` + x.nombre + `')>check_box_outline_blank</i></button><button><i class='fa-solid fa-trash error_icon' onclick=remover('` + x.nombre + `')></i></button></div></div><hr>`)
         }
         
         document.getElementById("productos").innerHTML = text.join("");
@@ -192,13 +192,14 @@ formularioagregarproducto.addEventListener("submit", function(event){
     if (topereintegro === 0 || descuento === 0){
         document.getElementById("errorproducto").innerHTML = "<p class='error'>Primero ingrese un numero de descuento y tope de reintegro</p>"
     }
+    
     else{
         let inputnombre = document.getElementById("nombreproducto")
         let inputprecio = document.getElementById("precioproducto")
         nombreproducto = inputnombre.value;
         precio = Number(inputprecio.value);
         if (nombreproducto === ""){
-            precio = 0;
+            document.getElementById("errorproducto").innerHTML = "<p class='error'>Por favor introduzca el nombre del producto que desea agregar.</p>"
         }
         else if (productos.find(comprobarnombres)){
             document.getElementById("errorproducto").innerHTML = "<p class='error'>Ya existe un producto con ese nombre</p>"
@@ -212,6 +213,8 @@ formularioagregarproducto.addEventListener("submit", function(event){
             if (total >= descmaximo){
                 document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
             }
+            document.getElementById("nombreproducto").value = "";
+            document.getElementById("precioproducto").value ="";
         }
 
     }
@@ -227,6 +230,7 @@ formulariobusquedanombre.addEventListener("submit", function(event){
             title: 'Producto encontrado',
             text: productos.find(comprobarnombresb).nombre  + ": " + productos.find(comprobarnombresb).precio + "$",
         })
+        document.getElementById("nombreproductobusqueda").value = "";
     }
     else{
         Swal.fire({
@@ -264,9 +268,10 @@ else{
     listarprecios(x);
     Swal.fire(
         'Se encontraron productos con ese precio:',
-        "<b>Productos: </b>" + listaprecio.join(", "),
+        "<span class='bold-text'>Productos: </span>" + listaprecio.join(", "),
         'success'
     )
+    document.getElementById("precioproductobusqueda").value = "";
 }
 })
 
@@ -409,7 +414,7 @@ function opciones_descuentos(){
             i++
             opcion += '<option value="'+ i +'">'+ x.nombre + x.descuento + x.topedereintegro + x.fecha +' </option>';
             }
-            let select = "<select id='selectordescuento' onchange='cambiardescuento()'>" + opcion + "</select>"
+            let select = "<select id='selectordescuento' class='form-select' aria-label='Default select example' onchange='cambiardescuento()'>" + opcion + "</select>"
             document.getElementById("selector_descuentos").innerHTML = select;
 }
 

@@ -1,8 +1,47 @@
+$color-verde: rgb(1, 161, 1);
+$color-verde-claro: rgb(12, 176, 12);
+$color-verde-oscuro:rgb(2, 123, 2);
+*{
+    margin: 0;
+    padding: 0;
+}
+
 body{
+    p{
+        font-weight: 500;
+    }
+    .bold-text{
+        font-weight: 700;
+    }
+    select{
+        font-weight: 600;
+    }
+    .btn{
+        background-color: $color-verde;
+        color: white;
+        font-weight: 700;
+        &:hover{
+            background-color: $color-verde-claro;
+        }
+        &:active{
+            background-color: $color-verde-oscuro;
+        }
+    }
     main{
         display: flex;
         flex-direction: column;
         align-items: center;
+        label{
+            font-weight: 700;
+            font-size: 20px;
+        }
+        .borrar-icon{
+            border-color: green;
+            &:hover{
+                background-color: rgb(219, 21, 21);
+                color: white;
+            }
+        }
         p{
             font-size: 20px;
         }
@@ -19,6 +58,28 @@ body{
             font-size: 1rem;
         }
         .discount_container{
+            #bancos{
+                font-weight: 600;
+                option{
+                    font-weight: 500;
+                }
+            }
+            #selectordescuento{
+                font-weight: 600;
+                option{
+                    font-weight: 500;
+                }
+            }
+            #descuentos_otros{
+                .boton-container{
+                    display: flex;
+                    justify-content: flex-end;
+                    button{
+                        margin-top: 10px;
+                        width: 100px;
+                    }
+                }
+            }
             select{
                 max-width: 300px;
             }
@@ -32,6 +93,11 @@ body{
                 display: flex;
                 flex-direction: column;
             }
+            #botones_otros{
+                    :first-child{
+                        margin-right: 10px;
+                    }
+            }
         }
         .text-container{
             #numerocuentas{
@@ -40,6 +106,7 @@ body{
                 #sumaresta{
                     display: flex;
                     flex-direction: row;
+                    margin-left: 10px;
                     button{
                         display: flex;
                         align-items: center;
@@ -47,18 +114,116 @@ body{
                         height: 30px;
                         width: 30px;
                     }
+                    #contadorsumaresta{
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        font-weight: 700;
+                        font-size: 25px;
+                        position: relative;
+                        bottom: 4px;
+                    }
+                }
+            }
+            #agregarproducto{
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                @media screen and (max-width: 559px){
+                    align-items: flex-start;
+                }
+                :first-child{
+                    margin-bottom: 10px;
+                    @media screen and (max-width: 559px){
+                        margin-bottom: 5px;
+                    }
+                }
+                div{
+                display: flex;
+                @media screen and (max-width: 559px){
+                    flex-direction: column;
+                }
+                .inputprecio{
+                        margin-left: 25px;
+                        @media screen and (max-width: 559px){
+                            margin-left: 6px;
+                        }
+                    
+                }
+                }
+                input{
+                    margin-left: 6px;
+                    width: 300px;
+                }
+                button{
+                    color: white;
+                    margin-top: 10px;
+                    position: relative;
+                    right: 5px;
+                    @media screen and (max-width: 559px){
+                        margin-left: 6px;
+                        right: 0px;
+                    }
                 }
             }
         }
         .products_container{
+            padding-top: 5px;
+            padding-bottom: 1px;
             background-color: rgb(231, 231, 231);
             .products{
                 display: flex;
-                justify-content: space-around;
+                justify-content: space-between;
+                .bold-text{
+                    margin-right: 5px;
+                }
+                .conjuto-productos{
+                    display: flex;
+                    flex-direction: row;
+                    @media screen and (max-width: 1200px){
+                        flex-direction: column;
+                    }
+                    .divprecios{
+                        display: flex;
+                        flex-direction: row;
+                        b{
+                            margin-right: 5px;
+                        }
+                        @media screen and (max-width: 600px){
+                            flex-direction: column;
+                            b{
+                                margin-right: 0px;
+                            }
+                        }
+
+                    }
+                    .pcp{
+                        display: flex;
+                        flex-direction: row;
+                        @media screen and (max-width: 768px){
+                            flex-direction: column;
+                        }
+                        .pc{
+                            display: flex;
+                            flex-direction: row;
+                            @media screen and (max-width: 600px){
+                                flex-direction: column;
+                            }
+                        }
+
+                    }
+                }
                 button{
                     border-style: hidden;
                     width: 30px;
                     background-color: rgb(231, 231, 231);
+                }
+                .botones{
+                    display: flex;
+                    :last-child{
+                        position: relative;
+                        bottom: 3px;
+                    }
+                    
                 }
                 .tachado{
                         text-decoration: line-through;
@@ -68,26 +233,126 @@ body{
                 }
                 i{
                     font-size: 28px;
-                    margin-left: 15px;
+                    margin-left: 6px;
                     display: inline-block;
-                    position: relative;
-                    right: 18px;
+                    color: $color-verde;
+                    &:hover{
+                        color: $color-verde-claro;
+                    }
                     }
                 
                 .edit_icon{
                     font-size: 25px;
-                    color: green;
                 }
                 .error_icon{
-                    color: green;
+                    &:hover{
+                        color: rgb(219, 21, 21);
+                    }
                     position: relative;
                     font-size: 25px;
-            }
-            .disabled_icon{
-                color: grey;
             }
             }
 
     }
-}}
+    .boton-limpiar{
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+    .buscadores{
+        display: flex;
+        @media screen and (max-width: 1200px){
+            flex-direction: column;
+        }
+        #busquedanombre{
+            margin-bottom: 15px;
+            input{
+                margin-left: 6px;
+                width: 300px;
+            }
+            button{
+                @media screen and (max-width: 423px){
+                    margin-top: 10px;
+                    margin-left: 5px;
+                }
+            }
+        }
+        #busquedaprecio{
+            label{
+                margin-left: 15px;
+                @media screen and (max-width: 1200px){
+                    margin-left: 0px;
+                }
+            }
+            input{
+                margin-left: 25px;
+                width: 300px;
+                @media screen and (max-width: 540px){
+                    margin-left: 6px;
+                }
+            }
+            button{
+                @media screen and (max-width: 423px){
+                    margin-top: 10px;
+                    margin-left: 5px;
+                }
+            }
+    
+        }
 
+    }
+}
+
+footer{
+    background-color: rgb(231, 231, 231);
+    padding: 20px 0px 20px 0px;
+    margin-top: 80px;
+    .container{
+        display: flex;
+        justify-content: space-around;
+        p{
+            font-size: 20px;
+        }
+        @media screen and (max-width: 488px){
+            display: flex;
+            flex-direction: column;
+            .version{
+                margin-top: 15px;
+            }
+        }
+        .footer{
+            .redes{
+                display: flex;
+                @media screen and (max-width: 768px){
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+                p{
+                    margin-left: 5px;
+                    color: black;
+                }
+                .wspp{
+                    color: $color-verde;
+                    
+                }
+                .mail{
+                    color: rgb(218, 5, 5);
+                    margin-left: 10px;
+                    @media screen and (max-width: 768px){
+                        margin-left: 0px;
+                    }
+                }
+                a{
+                    text-decoration: none;
+                    font-weight: 700;
+                    font-size: 20px;
+                    display: flex;
+                    i{
+                        font-size: 40px;
+                    }
+                }
+            
+        }
+        }
+    }
+}

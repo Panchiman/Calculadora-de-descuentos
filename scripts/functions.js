@@ -48,7 +48,7 @@ function renderdescuentos(){
 function calcularrestante(){
     restante = descmaximo - total;
     if (restante < 0){
-        restante = "<span class='bold-text'>Te pasaste del maximo por </span>" + Math.abs(restante) + " pesos"
+        restante = "<span class='bold-text'>Te pasaste del maximo por </span>" + tofixear2(Math.abs(restante)) + " pesos"
     }
     else{
         restante = tofixear2(restante);

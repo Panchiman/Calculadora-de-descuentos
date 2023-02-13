@@ -160,6 +160,12 @@ function renderproducts(){
         localStorage.setItem("contadorproductos", contadorproductos);
         calcularrestante();
         calculartotales();
+        if (total >= descmaximo){
+            document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
+        }
+        else{
+            document.getElementById("errortopeproducto").innerHTML = "";
+        }
 }}
 
 function  cambiarcantidad(objeto){
@@ -210,9 +216,6 @@ formularioagregarproducto.addEventListener("submit", function(event){
             total += productos[contadorproductos].precio;
             contadorproductos++;
             renderproducts()
-            if (total >= descmaximo){
-                document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
-            }
             document.getElementById("nombreproducto").value = "";
             document.getElementById("precioproducto").value ="";
         }

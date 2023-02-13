@@ -166,7 +166,8 @@ function renderproducts(){
         else{
             document.getElementById("errortopeproducto").innerHTML = "";
         }
-}}
+}
+}
 
 function  cambiarcantidad(objeto){
     let index = productos.findIndex(producto => producto.nombre === objeto);
@@ -415,9 +416,9 @@ function opciones_descuentos(){
     let opcion = '<option value="1" selected>Elija una promocion</option>';
     for (let x of lista_descuentos){
             i++
-            opcion += `<option value="'"${i}">${x.nombre} - ${x.descuento}% - ${x.topedereintegro}$ - ${x.fecha}</option>`;
+            opcion += `<option value="${i}">${x.nombre} - ${x.descuento}% - ${x.topedereintegro}$ - ${x.fecha}</option>`;
             }
-            let select = `<select id='selectordescuento' class='form-select' aria-label='Default select example' onchange='cambiardescuento()'>"${opcion}"</select>`
+            let select = `<select id='selectordescuento' class='form-select' aria-label='Default select example' onchange='cambiardescuento()'>${opcion}</select>`
             document.getElementById("selector_descuentos").innerHTML = select;
 }
 
@@ -430,6 +431,7 @@ function cambiarbanco(){
             .then((data) => {
                 document.getElementById("descuentos_otros").style.display = "none";
                 document.getElementById("botones_otros").style.display = "none";
+                document.getElementById("botonagregardescuentos").style.display = "none";
                 lista_descuentos = data;
                 opciones_descuentos()
                 })
@@ -440,13 +442,13 @@ function cambiarbanco(){
             .then((data) => {
                 document.getElementById("descuentos_otros").style.display = "none";
                 document.getElementById("botones_otros").style.display = "none";
+                document.getElementById("botonagregardescuentos").style.display = "none";
                 lista_descuentos = data;
                 opciones_descuentos()
                 })
     }
     else{
-        document.getElementById("descuentos_otros").style.display = "flex";
-        document.getElementById("botones_otros").style.display = "flex";
+        document.getElementById("botonagregardescuentos").style.display = "flex";
         if (backup("lista_descuentos", lista_descuentosjson)){
             lista_descuentos = JSON.parse(backup("lista_descuentos", lista_descuentosjson));
         }
@@ -492,6 +494,9 @@ formularioDescuentos.addEventListener("submit", function(event){
         localStorage.removeItem("lista_descuentos");
         localStorage.setItem("lista_descuentos", lista_descuentosjson)
         opciones_descuentos()
+        document.getElementById("descuentos_otros").style.display = "none";
+        document.getElementById("botones_otros").style.display = "none";
+        document.getElementById("botonagregardescuentos").style.display = "flex";
     }
 })
 
@@ -581,4 +586,9 @@ async function removerdeotros(){
                 }
             }
         })
+}
+function renderagregardescuento(){
+    document.getElementById("botonagregardescuentos").style.display = "none";
+    document.getElementById("descuentos_otros").style.display = "flex";
+    document.getElementById("botones_otros").style.display = "flex";
 }

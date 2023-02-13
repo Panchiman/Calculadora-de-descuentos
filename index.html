@@ -22,6 +22,7 @@
                     <option value="99">Otro</option>
                 </select>
                 <p id="selector_descuentos"></p>
+                <button id="botonagregardescuentos" class="btn btn-success" onclick="renderagregardescuento()" style="display: none;">Agregar descuento</button>
                 <form id="descuentos_otros" style="display: none;">
                     <label for="nombredeldescuento" class="form-label">Nombre del descuento:</label>
                     <input type="text" min="1" max="30" name="nombredescuento" id="nombredescuento" placeholder="Nombre del descuento" class="form-control">
@@ -31,7 +32,7 @@
                     <input type="number" min="1" max="999999999" name="topereinte" id="topereinte" placeholder="Tope de reintegro" class="form-control">
                     <label for="fechadescuento" class="form-label">Fecha del descuento:</label>
                     <input type="text" max="30" name="fechadescuento" id="fechadescuento" placeholder="Fecha del descuento" class="form-control">
-                    <div class="boton-container"><button type="submit" class="btn btn-success">Enviar</button></div>
+                    <div class="boton-container"><button type="submit" class="btn btn-success">Agregar</button></div>
                 </form>
                 <p id="errordescuento"></p>
                 <div id="botones_otros" style="display: none;"><button type="button" class="btn btn-danger borrar-icon" onclick="removerdeotros()">Quitar descuento de la lista</button><button type="button" class="btn btn-danger borrar-icon" onclick="limpiarotros()">Borrar lista de descuentos</button></div>

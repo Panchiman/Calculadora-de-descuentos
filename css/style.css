@@ -138,6 +138,10 @@ body main .discount_container form {
           flex-direction: column;
 }
 
+body main .discount_container #botones_otros {
+  margin-bottom: 30px;
+}
+
 body main .discount_container #botones_otros :first-child {
   margin-right: 10px;
 }

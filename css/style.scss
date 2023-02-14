@@ -71,14 +71,17 @@ body{
         .discount_container{
             #bancos{
                 font-weight: 600;
+                margin-bottom: 10px;
                 option{
                     font-weight: 500;
+                    padding: 5px
                 }
             }
-            #selectordescuento{
+            #selector_descuentos{
                 font-weight: 600;
                 option{
                     font-weight: 500;
+                    padding: 5px
                 }
             }
             #descuentos_otros{

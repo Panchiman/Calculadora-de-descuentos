@@ -88,18 +88,21 @@ body main .error {
 
 body main .discount_container #bancos {
   font-weight: 600;
+  margin-bottom: 10px;
 }
 
 body main .discount_container #bancos option {
   font-weight: 500;
+  padding: 5px;
 }
 
-body main .discount_container #selectordescuento {
+body main .discount_container #selector_descuentos {
   font-weight: 600;
 }
 
-body main .discount_container #selectordescuento option {
+body main .discount_container #selector_descuentos option {
   font-weight: 500;
+  padding: 5px;
 }
 
 body main .discount_container #descuentos_otros .boton-container {

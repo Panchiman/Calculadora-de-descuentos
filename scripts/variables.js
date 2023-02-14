@@ -39,3 +39,4 @@ let lista_tachadosjson = [];
 let totaltachados = 0;
 let nombredeldescuento = "";
 let formularioagregarproducto = document.getElementById("agregarproducto");
+let nombredelbanco = "";

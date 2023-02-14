@@ -1,12 +1,21 @@
 $color-verde: rgb(1, 161, 1);
 $color-verde-claro: rgb(12, 176, 12);
 $color-verde-oscuro:rgb(2, 123, 2);
+$breakpoint-1: 1200px;
+$breakpoint-2: 768px;
+$breakpoint-3: 559px;
+$breakpoint-4: 423px;
+
+
 *{
     margin: 0;
     padding: 0;
 }
 
 body{
+    ::placeholder{
+        padding-left: 5px;
+    }
     p{
         font-weight: 500;
     }
@@ -35,7 +44,7 @@ body{
         color: $color-verde-oscuro;
         font-weight: 700;
         text-decoration: underline;
-        padding-top: 15px;
+        padding-top: 30px;
         margin-bottom: 15px;
     }
     main{
@@ -74,14 +83,17 @@ body{
                 margin-bottom: 10px;
                 option{
                     font-weight: 500;
-                    padding: 5px
+                    padding: 8px 5px 8px 5px;
                 }
             }
             #selector_descuentos{
                 font-weight: 600;
+                .barraverde{
+                    padding: 8px 5px 8px 5px;
+                }
                 option{
                     font-weight: 500;
-                    padding: 5px
+                    padding: 8px 5px 8px 5px;
                 }
             }
             #descuentos_otros{
@@ -143,23 +155,23 @@ body{
                 display: flex;
                 align-items: center;
                 flex-direction: column;
-                @media screen and (max-width: 559px){
+                @media screen and (max-width: $breakpoint-3){
                     align-items: flex-start;
                 }
                 :first-child{
                     margin-bottom: 10px;
-                    @media screen and (max-width: 559px){
+                    @media screen and (max-width: $breakpoint-3){
                         margin-bottom: 5px;
                     }
                 }
                 div{
                 display: flex;
-                @media screen and (max-width: 559px){
+                @media screen and (max-width: $breakpoint-3){
                     flex-direction: column;
                 }
                 .inputprecio{
                         margin-left: 25px;
-                        @media screen and (max-width: 559px){
+                        @media screen and (max-width: $breakpoint-3){
                             margin-left: 6px;
                         }
                     
@@ -173,21 +185,22 @@ body{
                     color: white;
                     margin-top: 10px;
                     position: relative;
-                    right: 5px;
-                    @media screen and (max-width: 559px){
+                    @media screen and (max-width: $breakpoint-3){
                         margin-left: 6px;
-                        right: 0px;
                     }
                 }
             }
         }
         .products_container{
-            padding-top: 5px;
+            padding-top: 10px;
             padding-bottom: 1px;
             background-color: rgb(231, 231, 231);
             .products{
                 display: flex;
                 justify-content: space-between;
+                @media screen and (max-width: $breakpoint-3){
+                    flex-direction: column;
+                }
                 select{
                     margin-right: 5px;
                 }
@@ -197,16 +210,16 @@ body{
                 .conjuto-productos{
                     display: flex;
                     flex-direction: row;
-                    @media screen and (max-width: 1200px){
+                    @media screen and (max-width: $breakpoint-1){
                         flex-direction: column;
                     }
-                    .divprecios{
+                    .divpreciodesc{
                         display: flex;
                         flex-direction: row;
                         b{
                             margin-right: 5px;
                         }
-                        @media screen and (max-width: 600px){
+                        @media screen and (max-width: $breakpoint-3){
                             flex-direction: column;
                             b{
                                 margin-right: 0px;
@@ -217,13 +230,20 @@ body{
                     .pcp{
                         display: flex;
                         flex-direction: row;
-                        @media screen and (max-width: 768px){
+                        @media screen and (max-width: 1199px){
                             flex-direction: column;
                         }
                         .pc{
                             display: flex;
                             flex-direction: row;
-                            @media screen and (max-width: 600px){
+                            @media screen and (max-width: $breakpoint-3){
+                                flex-direction: column;
+                            }
+                        }
+                        .divprecio{
+                            display: flex;
+                            flex-direction: row;
+                            @media screen and (max-width: 390px){
                                 flex-direction: column;
                             }
                         }
@@ -237,6 +257,10 @@ body{
                 }
                 .botones{
                     display: flex;
+                    
+                    @media screen and (max-width: $breakpoint-3){
+                        align-self: flex-end;
+                    }
                     :last-child{
                         position: relative;
                         bottom: 3px;
@@ -247,7 +271,8 @@ body{
                         text-decoration: line-through;
                 }
                 select{
-                    width: 50px;
+                    width: 66px;
+                    display: inline-block;
                 }
                 i{
                     font-size: 28px;
@@ -278,7 +303,7 @@ body{
     }
     .buscadores{
         display: flex;
-        @media screen and (max-width: 1200px){
+        @media screen and (max-width: $breakpoint-1){
             flex-direction: column;
         }
         #busquedanombre{
@@ -288,7 +313,7 @@ body{
                 width: 300px;
             }
             button{
-                @media screen and (max-width: 423px){
+                @media screen and (max-width: $breakpoint-4){
                     margin-top: 10px;
                     margin-left: 5px;
                 }
@@ -297,7 +322,7 @@ body{
         #busquedaprecio{
             label{
                 margin-left: 15px;
-                @media screen and (max-width: 1200px){
+                @media screen and (max-width: $breakpoint-1){
                     margin-left: 0px;
                 }
             }
@@ -309,7 +334,7 @@ body{
                 }
             }
             button{
-                @media screen and (max-width: 423px){
+                @media screen and (max-width: $breakpoint-4){
                     margin-top: 10px;
                     margin-left: 5px;
                 }
@@ -340,7 +365,7 @@ footer{
         .footer{
             .redes{
                 display: flex;
-                @media screen and (max-width: 768px){
+                @media screen and (max-width: $breakpoint-2){
                     display: flex;
                     flex-direction: column;
                 }
@@ -356,7 +381,7 @@ footer{
                 .mail{
                     color: rgb(218, 5, 5);
                     margin-left: 10px;
-                    @media screen and (max-width: 768px){
+                    @media screen and (max-width: $breakpoint-2){
                         margin-left: 0px;
                     }
                 }

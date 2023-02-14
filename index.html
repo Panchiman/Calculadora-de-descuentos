@@ -16,10 +16,10 @@
                 <h1>Calculadora de descuentos:</h1>
                 <label for="bancos"><h3>Banco del descuento:</h3></label>
                 <select class="form-select" id="bancos" aria-label="Default select example" onchange='cambiarbanco()'>
-                    <option selected>Seleccione un banco</option>
+                    <option disabled selected>Seleccione un banco</option>
                     <option value="1">Cuenta DNI</option>
                     <option value="2">BNA+</option>
-                    <option value="99">Otro</option>
+                    <option value="99">Otros</option>
                 </select>
                 <p id="selector_descuentos"></p>
                 <button id="botonagregardescuentos" class="btn btn-success" onclick="renderagregardescuento()" style="display: none;">Agregar descuento</button>
@@ -74,7 +74,7 @@
                         <button type="submit" class="btn btn-success">Buscar</button>
                     </form>
                     <form id="busquedaprecio">
-                        <label for="precio">Buscar por precio</label>
+                        <label for="precio">Buscar por precio:</label>
                         <input type="number" min="1" name="precio" id="precioproductobusqueda" placeholder="Precio del producto">
                         <button id="boton" type="submit" class="btn btn-success">Buscar</button>
                     </form></div>
@@ -92,7 +92,7 @@
                     <a href="mailto:panchiman9999@gmail.com"><i class="fa-regular fa-envelope mail"></i><p>panchiman9999@gmail.com</p></a>
                 </div>
             </div>
-            <p class="version"><span class="bold-text">Version: </span>0.1.0</p>
+            <p class="version"><span class="bold-text">Version: </span>1.0.0</p>
         </div>
     </footer>
 

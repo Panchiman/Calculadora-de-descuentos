@@ -3,6 +3,22 @@
   padding: 0;
 }
 
+body ::-webkit-input-placeholder {
+  padding-left: 5px;
+}
+
+body :-ms-input-placeholder {
+  padding-left: 5px;
+}
+
+body ::-ms-input-placeholder {
+  padding-left: 5px;
+}
+
+body ::placeholder {
+  padding-left: 5px;
+}
+
 body p {
   font-weight: 500;
 }
@@ -38,7 +54,7 @@ body h1 {
   color: #027b02;
   font-weight: 700;
   text-decoration: underline;
-  padding-top: 15px;
+  padding-top: 30px;
   margin-bottom: 15px;
 }
 
@@ -93,16 +109,20 @@ body main .discount_container #bancos {
 
 body main .discount_container #bancos option {
   font-weight: 500;
-  padding: 5px;
+  padding: 8px 5px 8px 5px;
 }
 
 body main .discount_container #selector_descuentos {
   font-weight: 600;
 }
 
+body main .discount_container #selector_descuentos .barraverde {
+  padding: 8px 5px 8px 5px;
+}
+
 body main .discount_container #selector_descuentos option {
   font-weight: 500;
-  padding: 5px;
+  padding: 8px 5px 8px 5px;
 }
 
 body main .discount_container #descuentos_otros .boton-container {
@@ -258,18 +278,16 @@ body main .text-container #agregarproducto button {
   color: white;
   margin-top: 10px;
   position: relative;
-  right: 5px;
 }
 
 @media screen and (max-width: 559px) {
   body main .text-container #agregarproducto button {
     margin-left: 6px;
-    right: 0px;
   }
 }
 
 body main .products_container {
-  padding-top: 5px;
+  padding-top: 10px;
   padding-bottom: 1px;
   background-color: #e7e7e7;
 }
@@ -281,6 +299,15 @@ body main .products_container .products {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+@media screen and (max-width: 559px) {
+  body main .products_container .products {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }
 
 body main .products_container .products select {
@@ -310,7 +337,7 @@ body main .products_container .products .conjuto-productos {
   }
 }
 
-body main .products_container .products .conjuto-productos .divprecios {
+body main .products_container .products .conjuto-productos .divpreciodesc {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -320,18 +347,18 @@ body main .products_container .products .conjuto-productos .divprecios {
           flex-direction: row;
 }
 
-body main .products_container .products .conjuto-productos .divprecios b {
+body main .products_container .products .conjuto-productos .divpreciodesc b {
   margin-right: 5px;
 }
 
-@media screen and (max-width: 600px) {
-  body main .products_container .products .conjuto-productos .divprecios {
+@media screen and (max-width: 559px) {
+  body main .products_container .products .conjuto-productos .divpreciodesc {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  body main .products_container .products .conjuto-productos .divprecios b {
+  body main .products_container .products .conjuto-productos .divpreciodesc b {
     margin-right: 0px;
   }
 }
@@ -346,7 +373,7 @@ body main .products_container .products .conjuto-productos .pcp {
           flex-direction: row;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1199px) {
   body main .products_container .products .conjuto-productos .pcp {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -365,8 +392,27 @@ body main .products_container .products .conjuto-productos .pcp .pc {
           flex-direction: row;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 559px) {
   body main .products_container .products .conjuto-productos .pcp .pc {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+body main .products_container .products .conjuto-productos .pcp .divprecio {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+@media screen and (max-width: 390px) {
+  body main .products_container .products .conjuto-productos .pcp .divprecio {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -386,6 +432,13 @@ body main .products_container .products .botones {
   display: flex;
 }
 
+@media screen and (max-width: 559px) {
+  body main .products_container .products .botones {
+    -ms-flex-item-align: end;
+        align-self: flex-end;
+  }
+}
+
 body main .products_container .products .botones :last-child {
   position: relative;
   bottom: 3px;
@@ -396,7 +449,8 @@ body main .products_container .products .tachado {
 }
 
 body main .products_container .products select {
-  width: 50px;
+  width: 66px;
+  display: inline-block;
 }
 
 body main .products_container .products i {

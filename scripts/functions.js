@@ -35,7 +35,7 @@ function renderdescuentos(){
 //Esto es para calcular lo que queda restante para gastar, si te pasaste te lo dice y por cuanto, sino te dice cuanto te queda.
 function calcularrestante(){
     restante = descmaximo - total;
-    if (restante < 0){
+    if (restante < 0 && topereintegro != 0){
         restante = "<span class='bold-text'>Te pasaste del maximo por </span>" + tofixear2(Math.abs(restante)) + " pesos";
         document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
     }
@@ -49,7 +49,7 @@ function calcularrestante(){
 }
 //Esto te calcula los totales y te los renderiza
 function calculartotales(){
-    if (total >= descmaximo){
+    if (total >= descmaximo && topereintegro != 0){
         totalcondect = tofixear2(total - topereintegro);
         totaldescontado = topereintegro;
         document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
@@ -134,7 +134,7 @@ function renderproducts(){
         localStorage.setItem("contadorproductos", contadorproductos);
         calcularrestante();
         calculartotales();
-        if (total >= descmaximo){
+        if (total >= descmaximo && topereintegro != 0){
             document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
         }
         else{

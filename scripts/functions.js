@@ -36,11 +36,13 @@ function renderdescuentos(){
 function calcularrestante(){
     restante = descmaximo - total;
     if (restante < 0){
-        restante = "<span class='bold-text'>Te pasaste del maximo por </span>" + tofixear2(Math.abs(restante)) + " pesos"
+        restante = "<span class='bold-text'>Te pasaste del maximo por </span>" + tofixear2(Math.abs(restante)) + " pesos";
+        document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
     }
     else{
         restante = tofixear2(restante);
         restante = "Te quedan " + "<span class='bold-text'>" + restante + "</span>" + " pesos para llegar al maximo donde el descuento se aplica."
+        document.getElementById("errortopeproducto").innerHTML = "";
     }
     //muestra el restante para gastar.
     document.getElementById("restante").innerHTML = restante;
@@ -50,14 +52,16 @@ function calculartotales(){
     if (total >= descmaximo){
         totalcondect = tofixear2(total - topereintegro);
         totaldescontado = topereintegro;
+        document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
     }
     else{
         totalcondect = tofixear2(total - restdescuento(descuento,total));
         totaldescontado = restdescuento(descuento,total);
+        document.getElementById("errortopeproducto").innerHTML = "";
     }
     //Muestra los totales:
-    document.getElementById("total").innerHTML = `<span class='bold-text'>Total sin descuento: </span>${total}<span class='bold-text'>, total con descuento: </span>${totalcondect}<span class='bold-text'>, total descontado: </span><span>${tofixear2(totaldescontado)}</span>`
-    localStorage.setItem("total", total)
+    document.getElementById("total").innerHTML = `<span class='bold-text'>Total sin descuento: </span>${total}<span class='bold-text'>, total con descuento: </span>${totalcondect}<span class='bold-text'>, total descontado: </span><span>${tofixear2(totaldescontado)}</span>`;
+    localStorage.setItem("total", total);
 }
 //comprueba el nombre que le das con el del producto
 function comprobarnombres(product){
@@ -487,7 +491,6 @@ function sumrestcuentas(simbolo){
             document.getElementById("contadorsumaresta").innerHTML = contador_cuentas;
             localStorage.removeItem("contador_cuentas")
             localStorage.setItem("contador_cuentas", contador_cuentas)
-            calcularrestante()
             renderdescuentos()
             calcularrestante()
         }

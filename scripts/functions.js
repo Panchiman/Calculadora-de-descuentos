@@ -404,7 +404,7 @@ function opciones_descuentos(){
 function cambiarbanco(){
     banco = document.getElementById("bancos").value;
     if (banco == 1){
-        fetch("descuentos_cuentadni.json")
+        fetch("./descuentos_cuentadni.json")
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("descuentos_otros").style.display = "none";
@@ -415,7 +415,7 @@ function cambiarbanco(){
                 })
         }
     else if ( banco == 2){
-        fetch("descuentos_bna.json")
+        fetch("./descuentos_bna.json")
             .then((resp) => resp.json())
             .then((data) => {
                 document.getElementById("descuentos_otros").style.display = "none";

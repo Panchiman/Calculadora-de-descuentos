@@ -476,6 +476,10 @@ formularioDescuentos.addEventListener("submit", function(event){
         localStorage.removeItem("lista_descuentos");
         localStorage.setItem("lista_descuentos", lista_descuentosjson)
         opciones_descuentos()
+        document.getElementById("nombredescuento").value = "";
+        document.getElementById("numdescuento").value = "";
+        document.getElementById("topereinte").value = "";
+        document.getElementById("fechadescuento").value = "";
         document.getElementById("descuentos_otros").style.display = "none";
         document.getElementById("botones_otros").style.display = "none";
         document.getElementById("botonagregardescuentos").style.display = "flex";

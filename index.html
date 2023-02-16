@@ -25,13 +25,13 @@
                 <button id="botonagregardescuentos" class="btn btn-success" onclick="renderagregardescuento()" style="display: none;">Agregar descuento</button>
                 <form id="descuentos_otros" style="display: none;">
                     <label for="nombredeldescuento" class="form-label">Nombre del descuento:</label>
-                    <input type="text" min="1" max="30" name="nombredescuento" id="nombredescuento" placeholder="Nombre del descuento" class="form-control">
+                    <input type="text" min="1" maxlength="50" name="nombredescuento" id="nombredescuento" placeholder="Nombre del descuento" class="form-control">
                     <label for="numdescuento" class="form-label">Numero del descuento (sin el %):</label>
                     <input type="number" min="1" max="100" name="descuento" id="numdescuento" placeholder="Numero de descuento" class="form-control">
                     <label for="topereinte" class="form-label">Tope de reintegro:</label>
                     <input type="number" min="1" max="999999999" name="topereinte" id="topereinte" placeholder="Tope de reintegro" class="form-control">
                     <label for="fechadescuento" class="form-label">Fecha del descuento:</label>
-                    <input type="text" max="30" name="fechadescuento" id="fechadescuento" placeholder="Fecha del descuento" class="form-control">
+                    <input type="text" maxlength="40" name="fechadescuento" id="fechadescuento" placeholder="Fecha del descuento" class="form-control">
                     <div class="boton-container"><button type="submit" class="btn btn-success">Agregar</button></div>
                 </form>
                 <p id="errordescuento"></p>
@@ -49,7 +49,7 @@
                 <form id="agregarproducto" class="form-inline">
                     <div>
                         <label for="nombreproducto">Nombre del producto:</label>
-                        <input type="text" min="1" maxlength="25" name="nombre" id="nombreproducto" placeholder="Nombre del producto">
+                        <input type="text" min="1" maxlength="30" name="nombre" id="nombreproducto" placeholder="Nombre del producto">
                     </div>
                     <div>
                         <label for="precioproducto">Precio del producto:</label>
@@ -92,7 +92,7 @@
                     <a href="mailto:panchiman9999@gmail.com"><i class="fa-regular fa-envelope mail"></i><p>panchiman9999@gmail.com</p></a>
                 </div>
             </div>
-            <p class="version"><span class="bold-text">Version: </span>1.0.5</p>
+            <p class="version"><span class="bold-text">Version: </span>1.1.0</p>
         </div>
     </footer>
 

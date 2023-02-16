@@ -40,3 +40,4 @@ let totaltachados = 0;
 let nombredeldescuento = "";
 let formularioagregarproducto = document.getElementById("agregarproducto");
 let nombredelbanco = "";
+let caracteresbaneados = ["`",'"',"'"]

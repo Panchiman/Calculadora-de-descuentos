@@ -184,6 +184,9 @@ formularioagregarproducto.addEventListener("submit", function(event){
         if (nombreproducto === ""){
             document.getElementById("errorproducto").innerHTML = "<p class='error'>Por favor introduzca el nombre del producto que desea agregar.</p>"
         }
+        else if (comprobarcaracteres(nombreproducto)){
+            document.getElementById("errorproducto").innerHTML = "<p class='error'>Por favor introduzca un nombre sin comillas.</p>"
+        }
         else if (productos.find(comprobarnombres)){
             document.getElementById("errorproducto").innerHTML = "<p class='error'>Ya existe un producto con ese nombre</p>"
         }
@@ -300,8 +303,12 @@ function edit_productnombre(nombreaeditar){
             }
         },
         inputValidator: (value) => {
-            productos[index].nombre = value;
-            renderproducts();}
+            if (comprobarcaracteres(value)) {
+                return 'Por favor introduzca un nombre sin comillas.';}
+            else{
+                productos[index].nombre = value;
+                renderproducts();}
+            }
     })
 }
 //Esto esta para que cuando pulses para borrar un objeto te pida confirmacion y en caso de que sea si borre dicho producto
@@ -556,10 +563,11 @@ async function removerdeotros(){
     }
     else{
         await Swal.fire({
-            title: 'Select field validation',
+            title: 'Seleccione el descuento que desea eliminar',
             html: opciones_descuentospararemover(),
-            inputPlaceholder: 'Select a fruit',
             showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Eliminar",
             preConfirm: () =>{
                 let select = document.getElementById("selectordescuentopararemover");
                 let valor = select.value
@@ -584,4 +592,14 @@ function renderagregardescuento(){
     document.getElementById("botonagregardescuentos").style.display = "none";
     document.getElementById("descuentos_otros").style.display = "flex";
     document.getElementById("botones_otros").style.display = "flex";
+}
+
+let patata = 'pips'
+
+function comprobarcaracteres(nombre){
+    for (let x of caracteresbaneados){
+        if (nombre.search(x)!=-1){
+            return true
+        }
+    }
 }

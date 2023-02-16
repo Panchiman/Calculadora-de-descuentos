@@ -117,28 +117,33 @@ function botontachadas(nombreproducto){
 function renderproducts(){
     text = [];
     let i = 0;
-    for (let x of productos){
-        i++
-        if (comprobartachadas(x)){
-            text.push(`<div class='products container-fluid'><div class='conjuto-productos'><div class='pcp'><div class='pc'><div></div><p class='tachado'><span class='bold-text'>Producto:</span>${x.nombre}<button><i class='fa-solid fa-pen-to-square edit_icon disabled_icon'></i></button></p><p class='tachado'><span class='bold-text'> - Cantidad:</span><select id='select${i}' class="form-select" onchange="cambiarcantidad('` + x.nombre + `')" disabled>${selectfunction(x.cantidad)}</select></p></div><div class='divprecio'><p class='tachado'><span class='bold-text'> - Precio:</span></p><p class='tachado'>${x.precio * x.cantidad} (${x.precio} c/u)<button><i class='fa-solid fa-pen-to-square edit_icon disabled_icon'></i></button></p></div></div><div class='preciod'><div class='divpreciodesc'><p class='tachado'><span class='bold-text'> - Precio con descuento:</span></p><p class='tachado'>${x.preciocondesct() * x.cantidad} (${x.preciocondesct()} c/u)</p></div></div></div><div class='botones'><button><i class='material-icons' onclick="botontachadas('` + x.nombre + `')">check_box</i></button><button><i class='fa-solid fa-trash error_icon' onclick="remover('` + x.nombre + `')"></i></button></div></div><hr>`)
-        }
-        else{
-            text.push(`<div class='products container-fluid'><div class='conjuto-productos'><div class='pcp'><div class='pc'><div></div><p><span class='bold-text'>Producto:</span>${x.nombre}<button><i class='fa-solid fa-pen-to-square edit_icon' onclick="edit_productnombre('` + x.nombre + `')"></i></button></p><p><span class='bold-text'> - Cantidad:</span><select id='select${i}' class="form-select" onchange="cambiarcantidad('` + x.nombre + `')">${selectfunction(x.cantidad)}</select></p></div><div class='divprecio'><p><span class='bold-text'> - Precio:</span></p><p>${x.precio * x.cantidad} (${x.precio} c/u)<button><i class='fa-solid fa-pen-to-square edit_icon' onclick="edit_productprecio('` + x.nombre + `')"></i></button></p></div></div><div class='preciod'><div class='divpreciodesc'><p><span class='bold-text'> - Precio con descuento:</span></p><p>${x.preciocondesct() * x.cantidad} (${x.preciocondesct()} c/u)</p></div></div></div><div class='botones'><button><i class='material-icons' onclick="botontachadas('` + x.nombre + `')">check_box_outline_blank</i></button><button><i class='fa-solid fa-trash error_icon' onclick="remover('` + x.nombre + `')"></i></button></div></div><hr>`)
-        }
-        
-        document.getElementById("productos").innerHTML = text.join("");
-        productosjson = JSON.stringify(productos);
-        localStorage.removeItem("productos");
-        localStorage.setItem("productos", productosjson)
-        localStorage.removeItem("contadorproductos");
-        localStorage.setItem("contadorproductos", contadorproductos);
-        calcularrestante();
-        calculartotales();
-        if (total >= descmaximo && topereintegro != 0){
-            document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
-        }
-        else{
-            document.getElementById("errortopeproducto").innerHTML = "";
+    if (productos.length == 0){
+        document.getElementById("productos").innerHTML = "No hay ningun producto.";
+    }
+    else{
+        for (let x of productos){
+            i++
+            if (comprobartachadas(x)){
+                text.push(`<div class='products container-fluid'><div class='conjuto-productos'><div class='pcp'><div class='pc'><div></div><p class='tachado'><span class='bold-text'>Producto:</span>${x.nombre}<button><i class='fa-solid fa-pen-to-square edit_icon disabled_icon'></i></button></p><p class='tachado'><span class='bold-text'> - Cantidad:</span><select id='select${i}' class="form-select" onchange="cambiarcantidad('` + x.nombre + `')" disabled>${selectfunction(x.cantidad)}</select></p></div><div class='divprecio'><p class='tachado'><span class='bold-text'> - Precio:</span></p><p class='tachado'>${x.precio * x.cantidad} (${x.precio} c/u)<button><i class='fa-solid fa-pen-to-square edit_icon disabled_icon'></i></button></p></div></div><div class='preciod'><div class='divpreciodesc'><p class='tachado'><span class='bold-text'> - Precio con descuento:</span></p><p class='tachado'>${x.preciocondesct() * x.cantidad} (${x.preciocondesct()} c/u)</p></div></div></div><div class='botones'><button><i class='material-icons' onclick="botontachadas('` + x.nombre + `')">check_box</i></button><button><i class='fa-solid fa-trash error_icon' onclick="remover('` + x.nombre + `')"></i></button></div></div><hr>`)
+            }
+            else{
+                text.push(`<div class='products container-fluid'><div class='conjuto-productos'><div class='pcp'><div class='pc'><div></div><p><span class='bold-text'>Producto:</span>${x.nombre}<button><i class='fa-solid fa-pen-to-square edit_icon' onclick="edit_productnombre('` + x.nombre + `')"></i></button></p><p><span class='bold-text'> - Cantidad:</span><select id='select${i}' class="form-select" onchange="cambiarcantidad('` + x.nombre + `')">${selectfunction(x.cantidad)}</select></p></div><div class='divprecio'><p><span class='bold-text'> - Precio:</span></p><p>${x.precio * x.cantidad} (${x.precio} c/u)<button><i class='fa-solid fa-pen-to-square edit_icon' onclick="edit_productprecio('` + x.nombre + `')"></i></button></p></div></div><div class='preciod'><div class='divpreciodesc'><p><span class='bold-text'> - Precio con descuento:</span></p><p>${x.preciocondesct() * x.cantidad} (${x.preciocondesct()} c/u)</p></div></div></div><div class='botones'><button><i class='material-icons' onclick="botontachadas('` + x.nombre + `')">check_box_outline_blank</i></button><button><i class='fa-solid fa-trash error_icon' onclick="remover('` + x.nombre + `')"></i></button></div></div><hr>`)
+            }
+            
+            document.getElementById("productos").innerHTML = text.join("");
+            productosjson = JSON.stringify(productos);
+            localStorage.removeItem("productos");
+            localStorage.setItem("productos", productosjson)
+            localStorage.removeItem("contadorproductos");
+            localStorage.setItem("contadorproductos", contadorproductos);
+            calcularrestante();
+            calculartotales();
+            if (total >= descmaximo && topereintegro != 0){
+                document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
+            }
+            else{
+                document.getElementById("errortopeproducto").innerHTML = "";
+            }
         }
     }
 }
@@ -346,16 +351,15 @@ function limpiarlista(){
             localStorage.setItem("productos", productosjson)
             localStorage.setItem("total", total)
             localStorage.setItem("contadorproductos", contadorproductos);
-    
             lista_tachadosjson = JSON.stringify(lista_tachados)
             localStorage.removeItem("lista_tachados")
             localStorage.setItem("lista_tachados", lista_tachadosjson)
-            localStorage.removeItem("totaltachados")
-            localStorage.setItem("totaltachados", totaltachados)
+            localStorage.removeItem("totaltachados");
+            localStorage.setItem("totaltachados", totaltachados);
+            document.getElementById("errortopeproducto").innerHTML = "";
             renderproducts();
             calcularrestante();
             calculartotales();
-            document.getElementById("errortopeproducto").innerHTML = "";
             } else if (result.isDenied) {
             Swal.fire('No se elimino la lista', '', 'error')
             }
@@ -390,7 +394,6 @@ function opciones_descuentos(){
         opcion = '<option value="1" selected>Agregue un descuento</option>'
     }
     else{
-        console.log(lista_descuentos)
         opcion = '<option value="1" selected>Elija una promocion</option>';
     }
     for (let x of lista_descuentos){

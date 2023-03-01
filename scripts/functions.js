@@ -51,7 +51,7 @@ function calcularrestante(){
 function calculartotales(){
     if (total >= descmaximo && topereintegro != 0){
         totalcondect = tofixear2(total - topereintegro);
-        totaldescontado = topereintegro;
+        totaldescontado = topereintegro * contador_cuentas;
         document.getElementById("errortopeproducto").innerHTML = "<p class='error'>Se alcanzo el tope donde el descuento se aplica</p>";
     }
     else{
@@ -75,7 +75,7 @@ function comprobartachadas(comprobado){
         }
     }
 }
-//funcion del boton de tachadas. Se fija si el nombre del producto ya esta en la lista de tachadas, si no lo esta lo agrega y quita su precio al total, sino lo quita de las tachadas y suma su precio al total de nuevo.
+//funcion del boton de tachadas. Se fija si el nombre del producto ya esta encantidad la lista de tachadas, si no lo esta lo agrega y quita su precio al total, sino lo quita de las tachadas y suma su precio al total de nuevo.
 function botontachadas(nombreproducto){
     let indexproductos = productos.findIndex((element) => element.nombre == nombreproducto)
     let preciotachado = productos[indexproductos].precio;
@@ -507,6 +507,8 @@ function sumrestcuentas(simbolo){
             localStorage.setItem("contador_cuentas", contador_cuentas)
             renderdescuentos()
             calcularrestante()
+            calculartotales()
+            renderproducts()
         }
     }
     else{
@@ -516,6 +518,7 @@ function sumrestcuentas(simbolo){
         localStorage.setItem("contador_cuentas", JSON.stringify(contador_cuentas))
         calcularrestante()
         renderdescuentos()
+        calculartotales()
         calcularrestante()
     }
 }

@@ -435,6 +435,17 @@ function cambiarbanco(){
                 opciones_descuentos()
                 })
     }
+    else if ( banco == 3){
+        fetch("./descuentos_uala.json")
+            .then((resp) => resp.json())
+            .then((data) => {
+                document.getElementById("descuentos_otros").style.display = "none";
+                document.getElementById("botones_otros").style.display = "none";
+                document.getElementById("botonagregardescuentos").style.display = "none";
+                lista_descuentos = data;
+                opciones_descuentos()
+                })
+    }
     else{
         if (backup("lista_descuentos", lista_descuentosjson)){
             lista_descuentos = JSON.parse(backup("lista_descuentos", lista_descuentosjson));
